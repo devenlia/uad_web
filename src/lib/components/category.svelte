@@ -9,25 +9,20 @@
   export let category : Category;
 
   const deleteCategory = async () => {
-    let body = new FormData()
-    body.append("category", JSON.stringify(category))
+    let headers = new Headers()
+    headers.set("content-type", "application/json")
 
-    let res = await fetch("/actions/category/delete", {
-      method: "POST",
-      body
-    });
+    let res = await fetch(`http://localhost:8080/content/category/delete?id=${category.id}`, {
+      method: "DELETE",
+      headers
+    })
 
     if (res.status != 200) {
       let statusText = await res.text();
-      addToast({
-        id: "",
-        priority: 2,
-        message: `Error while trying to delete the category '${category.name}'! See console for more information.`
-      })
-      console.log(`Error while trying to delete the category '${category.name}'! Status: ${res.status} Message: ${statusText}`);
-    }
+      addToast({id: "", priority: 2, message: `An error occurred while attempting to delete category '${category.name}'. More details are available in console.`})
+      console.error(`An error occurred while attempting to delete category '${category.name}'. Status: ${res.status}, Message: ${statusText}.`);    }
 
-    await invalidateAll()
+    await invalidateAll();
   }
 </script>
 

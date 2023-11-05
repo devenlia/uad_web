@@ -13,25 +13,18 @@
   export let container : Container
 
   const deleteContainer = async () => {
-    let body = new FormData()
-    body.append("container", JSON.stringify(container))
+    let headers = new Headers()
+    headers.set("content-type", "application/json")
 
-    let res = await fetch("/actions/container/delete", {
-      method: "POST",
-      body
-    });
+    let res = await fetch(`http://localhost:8080/content/container/delete?id=${container.id}`, {method: "DELETE", headers})
 
     if (res.status != 200) {
       let statusText = await res.text();
-      addToast({
-        id: "",
-        priority: 2,
-        message: "Error while trying to deleteConfirmation a container! See console for more information."
-      })
-      console.log(`Error while trying to delete a container! Status: ${res.status} Message: ${statusText}`);
+      addToast({id: "", priority: 2, message: `Failed to delete the container named ${container.name}. Please check the console for further details.`})
+      console.error(`Failed whilst attempting to delete the container named ${container.name}. Status: ${res.status} Message: ${statusText}`);
     }
 
-    await invalidateAll()
+    await invalidateAll();
   }
 </script>
 

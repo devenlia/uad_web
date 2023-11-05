@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { Action, Parent, Visible } from './store';
-  import { error } from '@sveltejs/kit';
   import { closeContentWizard } from '$lib/modals/contentWizard/index';
   import { invalidateAll } from '$app/navigation';
   import { addToast } from "$lib/stores/toastStore";
@@ -36,10 +35,8 @@
 
     if (res.status != 200) {
       await closeContentWizard();
-
       addToast({id: "", priority: 2, message: "An error occurred while initializing the wizard. Please check the console for more details."})
       console.error(`An error occurred while initializing the wizard. Status: ${res.status}, Message: ${await res.text()}`);
-
     }
 
     let pages = await res.json();
@@ -78,16 +75,20 @@
     }
   }
 
-  const addPage = async() => {
-    let body = new FormData();
-    body.append("page", JSON.stringify({name: pageName, path: path}));
+  const addPage = async () => {
+    let headers = new Headers()
+    headers.set("content-type", "application/json")
 
-    let res = await fetch("/actions/page/add", { method: "POST", body });
-    let resText = await res.text();
-    if ((res.status === 400 && resText === "Page name already taken") || res.status !== 200 )  {
-      nameInvalid = true
-      invalidMessage = ((res.status === 400 && resText === "Page name already taken") ? "Name already taken!" : "Something went wrong! See console.");
-      console.error(`Error while trying to add a page! Status: ${res.status} Message: ${resText}`)
+    let res = await fetch("http://localhost:8080/content/page/add", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({name: pageName, path: path})
+    })
+
+    if (res.status !== 200 )  {
+      let statusText = await res.text();
+      addToast({id: "", priority: 2, message: `An error occurred while trying to add page '${pageName}'. Please check the console for detailed information.`})
+      console.error(`Failed to add page '${pageName}'. Status: ${res.status}, Message: ${statusText}`);
     }
   }
 </script>

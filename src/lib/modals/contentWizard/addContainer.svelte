@@ -65,15 +65,19 @@
   }
 
   const addContainer = async () => {
-    let body = new FormData()
-    body.append("container", JSON.stringify({ parentId: parentPage.id, name: containerName }))
+    let headers = new Headers()
+    headers.set("content-type", "application/json")
 
-    let res = await fetch("/actions/container/add", { method: "POST", body });
-    let text = await res.text();
-    if (res.status != 200) {
-      nameInvalid = true
-      invalidMessage = "Something went wrong! See console."
-      console.error(`Error while trying to add a container! Status: ${res.status} Message: ${text}`);
+    let res = await fetch("http://localhost:8080/content/container/add", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ parentId: parentPage.id, name: containerName })
+    })
+
+    if (res.status !== 200 )  {
+      let statusText = await res.text();
+      addToast({id: "", priority: 2, message: `An error occurred while trying to add container '${containerName}'. Please check the console for detailed information.`})
+      console.error(`Failed to add container '${containerName}'. Status: ${res.status}, Message: ${statusText}`);
     }
   }
 </script>

@@ -141,18 +141,19 @@
   }
 
   const addLink = async () => {
-    let body = new FormData()
-    body.append("link", JSON.stringify({ parentId: parentCategory.id, name: linkName, href }))
+    let headers = new Headers()
+    headers.set("content-type", "application/json")
 
-    let res = await fetch("/actions/link/add", { method: "POST", body });
+    let res = await fetch("http://localhost:8080/content/category/add", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ parentId: parentCategory.id, name: linkName, href })
+    })
 
-    let text = await res.text();
-
-    if (res.status != 200) {
-      hrefInvalidMessage = "Something went wrong! See console."
-      console.log(`Error while trying to add a category! Status: ${res.status} Message: ${text}`);
-
-      return
+    if (res.status !== 200 )  {
+      let statusText = await res.text();
+      addToast({id: "", priority: 2, message: `An error occurred while trying to add link '${linkName}'. Please check the console for detailed information.`})
+      console.error(`Failed to add link '${linkName}'. Status: ${res.status}, Message: ${statusText}`);
     }
   }
 </script>
