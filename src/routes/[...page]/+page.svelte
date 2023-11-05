@@ -1,18 +1,11 @@
 <script lang="ts">
-  import { AddAction } from "../../lib/components/actions";
   import type { PageData } from './$types';
   import { SubpageCard, Container } from "$lib/components";
   import { SadCat } from "$lib/assets";
-  import { openModal } from "$lib/components/actions/add";
+  import { openAddModal } from "$lib/components/actions/add";
   import { addToast } from "$lib/stores/toastStore";
 
   export let data : PageData;
-
-  export let page = data.page
-
-  const click = () => {
-    addToast({id: "", priority: 2, message: "Error while trying to delete a page! See console for more information."})
-  }
 </script>
 
 <base href={data.basePath}/>
@@ -38,8 +31,8 @@
         <h1 class="text-7xl">Welcome to UAD</h1>
         <p class="text-xl mb-10">Your new Unified Application Directory</p>
 
-        <button on:click={() => openModal("container", data.page, true)} class="btn btn-outline">Start to add your first link!</button>
-        <button on:click={() => {click()}} class="btn btn-primary">Take a tour.</button>
+        <button on:click={() => openAddModal("container", data.page, true)} class="btn btn-outline">Start to add your first link!</button>
+        <button on:click={() => {}} class="btn btn-primary">Take a tour.</button>
       </div>
       <div class="w-96">
         <img src="{SadCat}" alt="SadCat">

@@ -2,94 +2,78 @@
   import { Action, Parent, Step, Visible } from "./store";
   import { onMount } from "svelte";
   import { error } from "@sveltejs/kit";
-  import { closeModal } from "$lib/components/actions/add/index";
+  import { closeAddModal } from "$lib/components/actions/add/index";
   import { invalidateAll } from "$app/navigation";
-
-  let action : string;
-  Action.subscribe((v) => {action = v});
-
-  let visible : boolean;
-  Visible.subscribe((v) => {visible = v});
-
-  onMount(() => {
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  });
+  import { addToast } from "$lib/stores/toastStore";
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (visible && action == "container" && event.key === 'Enter') {
+    if ($Visible && $Action == "container" && event.key === 'Enter') {
       proceed();
     }
   };
 
-  let containerName = "";
-
-  let nameInvalid = false
-  let invalidMessage : string | null = null
-
-  let parents : Promise<Array<any>> = loadParents();
-  let parent : any = {id: "0", name: "Home", path: "home"};
-  Parent.subscribe(async (v) => {
-    if (v)
-      parent = v;
+  onMount(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   });
 
+  let containerName : string;
+  let nameInvalid = false
+  let invalidMessage : string | null = null
+  let parentPage : any = $Parent.page;
+
+  // Load parents
+  let parentPages : Promise<Array<any>> = loadParents();
+
   async function loadParents() {
-    let res : Response;
-    res = await fetch(`http://localhost:8080/content/page/list`);
+    let res : Response = await fetch(`http://localhost:8080/content/page/list`)
 
     if (res.status != 200) {
-      throw error(res.status);
+      await closeAddModal();
+
+      addToast({id: "", priority: 2, message: "An error occurred while initializing the wizard. Please check the console for more details."})
+      console.error(`An error occurred while initializing the wizard. Status: ${res.status}, Message: ${await res.text()}`);
+
     }
 
-    let json = await res.json();
+    let pages = await res.json();
+    parentPage = pages.find((obj : any) => obj.id === parentPage.id)
 
-    parent = json.find((obj : any) => obj.path === (parent.path ?? "0"));
-
-    return json;
+    return pages
   }
 
-  const validate = () => {
+  // Check if container name is valid
+  const isValidContainerName = () => {
     containerName = containerName?.trim();
-    if (containerName == "") {
+    if (!containerName || containerName === "") {
       nameInvalid = true
       invalidMessage = "Supply a name!"
-
       return false
     }
-    else {
-      nameInvalid = false
-      invalidMessage = null
 
-      return true
-    }
+    nameInvalid = false
+    invalidMessage = null
+    return true
   }
 
   const proceed = async () => {
-    if (await validate()) {
-      let body = new FormData()
-      body.append("container", JSON.stringify({parent: parent.id, container: { name: containerName } }))
-
-      let res = await fetch("/actions/container/add", {
-        method: "POST",
-        body
-      });
-
-      let text = await res.text();
-
-      if (res.status != 200) {
-        nameInvalid = true
-        invalidMessage = "Something went wrong! See console."
-        console.log(`Error while trying to add a container! Status: ${res.status} Message: ${text}`);
-
-        return
-      }
-
+    if (isValidContainerName()) {
+      await addContainer()
       await invalidateAll()
-      await closeModal()
+      await closeAddModal()
+    }
+  }
+
+  const addContainer = async () => {
+    let body = new FormData()
+    body.append("container", JSON.stringify({ parentId: parentPage.id, name: containerName }))
+
+    let res = await fetch("/actions/container/add", { method: "POST", body });
+    let text = await res.text();
+    if (res.status != 200) {
+      nameInvalid = true
+      invalidMessage = "Something went wrong! See console."
+      console.error(`Error while trying to add a container! Status: ${res.status} Message: ${text}`);
     }
   }
 </script>
@@ -99,14 +83,14 @@
     <span class="label-text">Select the <b>parent</b> of your new container:</span>
   </label>
 
-  {#await parents}
+  {#await parentPages}
     <select name="parent" class=" mb-3 select select-bordered select-disabled w-full">
-      <option selected>{parent.path}</option>
+      <option selected>{parentPage.name + " (" + parentPage.path.replaceAll(".", " > ") + ")"}</option>
     </select>
   {:then value}
-    <select name="parent" bind:value={parent} class=" mb-3 select select-bordered w-full">
+    <select name="parent" bind:value={parentPage.id} class=" mb-3 select select-bordered w-full">
       {#each value as option}
-        <option value={option}>{option.name + " (" + option.path.replaceAll(".", " > ") + ")"}</option>
+        <option value={option.id}>{option.name + " (" + option.path.replaceAll(".", " > ") + ")"}</option>
       {/each}
     </select>
   {/await}
@@ -114,7 +98,7 @@
   <label class="label" for="name">
     <span class="label-text">Give your container a <b>name</b>:</span>
   </label>
-  <input on:input={validate} on:change={validate} name="name" type="text" placeholder="Name" class="input input-bordered w-full" class:input-error={nameInvalid} bind:value={containerName}/>
+  <input autofocus type="text" placeholder="Name" class="input input-bordered w-full" class:input-error={nameInvalid} bind:value={containerName}/>
   <label class="label" for="name">
     <span></span>
     {#if (invalidMessage != null)}
@@ -123,7 +107,7 @@
   </label>
 
   <div class="flex flex-row justify-end gap-2">
-    <button on:click={closeModal} class="btn btn-outline">Discard</button>
+    <button on:click={closeAddModal} class="btn btn-outline">Discard</button>
     <button on:click={proceed} class="btn btn-primary">Save and continue</button>
   </div>
 </div>

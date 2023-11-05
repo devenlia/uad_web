@@ -2,127 +2,148 @@
   import { Action, Parent, Step, Visible } from "./store";
   import { onMount } from "svelte";
   import { error } from "@sveltejs/kit";
-  import { closeModal } from "$lib/components/actions/add/index";
+  import { closeAddModal } from "$lib/components/actions/add/index";
   import { invalidateAll } from "$app/navigation";
-
-  let action : string;
-  Action.subscribe((v) => {action = v});
-
-  let visible : boolean;
-  Visible.subscribe((v) => {visible = v});
-
-  onMount(() => {
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  });
+  import { addToast } from "$lib/stores/toastStore";
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (visible && action == "category" && event.key === 'Enter') {
+    if ($Visible && $Action == "category" && event.key === 'Enter') {
       proceed();
     }
   };
 
-  let categoryName = "";
-
-  let nameInvalid = false
-  let invalidMessage : string | null = null
-
-  let parent : any = {id: "0", name: "Home", path: "home"};
-  Parent.subscribe(async (v) => {
-    if (v)
-      parent = v;
+  onMount(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   });
-  let parents : Promise<Array<any>> = loadParents();
 
-  async function loadParents() {
-    let res : Response;
-    res = await fetch(`http://localhost:8080/content/page/search?path=${parent.path}`);
+  let categoryName = "";
+  let containerInvalid = false
+  let containerInvalidMessage : string | null = null
+  let nameInvalid = false
+  let nameInvalidMessage : string | null = null
+
+  let parentPage : any = $Parent.page;
+  let parentPages : Promise<Array<any>> = loadParentPages();
+
+  let parentContainer : any = $Parent.container;
+  let parentContainers : any = parentPage.containers;
+  
+
+  async function loadParentPages() {
+    let res : Response = await fetch(`http://localhost:8080/content/page/list`)
 
     if (res.status != 200) {
-      throw error(res.status);
+      await closeAddModal();
+
+      addToast({id: "", priority: 2, message: "An error occurred while initializing the wizard. Please check the console for more details."})
+      console.error(`An error occurred while initializing the wizard. Status: ${res.status}, Message: ${await res.text()}`);
+
     }
 
-    let parentPage = await res.json()
-    parent = parentPage.containers[0];
+    let pages = await res.json();
+    parentPage = pages.find((obj : any) => obj.id === parentPage.id)
+    changeParentPage()
 
-    return parentPage.containers;
+    return pages
   }
 
-  const validate = () => {
+  const changeParentPage = () => {
+    parentContainers = parentPage.containers
+    parentContainer = parentPage.containers.find((obj : any) => obj.id === parentContainer?.id) ?? parentPage.containers[0]
+  }
+
+  const isValidParentContainer = () => {
+    if (!parentContainer) {
+      containerInvalid = true
+      containerInvalidMessage = "No container!"
+      return false
+    }
+
+    containerInvalid = false
+    containerInvalidMessage = null
+    return true;
+  }
+
+  const isValidCategoryName = () => {
     categoryName = categoryName?.trim();
     if (categoryName == "") {
       nameInvalid = true
-      invalidMessage = "Supply a name!"
-
+      nameInvalidMessage = "Supply a name!"
       return false
     }
-    else {
-      nameInvalid = false
-      invalidMessage = null
 
-      return true
-    }
+    nameInvalid = false
+    nameInvalidMessage = null
+    return true
   }
 
   const proceed = async () => {
-    if (await validate()) {
-      let body = new FormData()
-      body.append("category", JSON.stringify({parent: parent.id, category: { name: categoryName } }))
-
-      let res = await fetch("/actions/category/add", {
-        method: "POST",
-        body
-      });
-
-      let text = await res.text();
-
-      if (res.status != 200) {
-        nameInvalid = true
-        invalidMessage = "Something went wrong! See console."
-        console.log(`Error while trying to add a category! Status: ${res.status} Message: ${text}`);
-
-        return
-      }
-
+    if (isValidCategoryName() && isValidParentContainer()) {
+      await addCategory()
       await invalidateAll()
-      await closeModal()
+      await closeAddModal()
+    }
+  }
+
+  const addCategory = async () => {
+    let body = new FormData()
+    body.append("category", JSON.stringify({ parentId: parentContainer.id, name: categoryName }))
+
+    let res = await fetch("/actions/category/add", { method: "POST", body });
+    let text = await res.text();
+    if (res.status != 200) {
+      nameInvalid = true
+      nameInvalidMessage = "Something went wrong! See console."
+      console.log(`Error while trying to add a category! Status: ${res.status} Message: ${text}`);
     }
   }
 </script>
 
 <div class="w-full">
-  <label class="label" for="parent">
-    <span class="label-text">Select the <b>parent</b> of your new container:</span>
+  <label class="label" for="parentPage">
+    <span class="label-text">Select the <b>parent page</b> of your new container:</span>
   </label>
-
-  {#await parents}
-    <select name="parent" class=" mb-3 select select-bordered select-disabled w-full">
-      <option selected>Loading...</option>
+  {#await parentPages}
+    <select disabled name="parentPage" class=" mb-3 select select-bordered select-disabled w-full">
+      <option selected>{parentPage.name + " (" + parentPage.path?.replaceAll(".", " > ") + ")"}</option>
     </select>
-  {:then value}
-    <select name="parent" bind:value={parent} class=" mb-3 select select-bordered w-full">
-      {#each value as option}
-        <option value={option}>{option.name}</option>
+  {:then values}
+    <select disabled={values.length <= 1} name="parentPage" bind:value={parentPage} on:change={changeParentPage} class=" mb-3 select select-bordered w-full">
+      {#each values as option}
+        <option value={option}>{option.name + " (" + option.path.replaceAll(".", " > ") + ")"}</option>
       {/each}
     </select>
   {/await}
 
+  <label class="label" for="parentCont">
+    <span class="label-text">Select the <b>parent container</b> of your new container:</span>
+  </label>
+  <select name="parentCont" disabled={parentContainers.length <= 1} bind:value={parentContainer} class=" mb-3 select select-bordered w-full" class:select-error={containerInvalid}>
+    {#each parentContainers as option}
+      <option value={option}>{option.name}</option>
+    {/each}
+  </select>
+  <label class="label" for="parentCont">
+    <span></span>
+    {#if (containerInvalidMessage != null)}
+      <span class="label-text-alt text-error">{containerInvalidMessage}</span>
+    {/if}
+  </label>
+
   <label class="label" for="name">
     <span class="label-text">Give your container a <b>name</b>:</span>
   </label>
-  <input on:input={validate} on:change={validate} name="name" type="text" placeholder="Name" class="input input-bordered w-full" class:input-error={nameInvalid} bind:value={categoryName}/>
+  <input autofocus name="name" type="text" placeholder="Name" class="input input-bordered w-full" class:input-error={nameInvalid} bind:value={categoryName}/>
   <label class="label" for="name">
     <span></span>
-    {#if (invalidMessage != null)}
-      <span class="label-text-alt text-error">{invalidMessage}</span>
+    {#if (nameInvalidMessage != null)}
+      <span class="label-text-alt text-error">{nameInvalidMessage}</span>
     {/if}
   </label>
 
   <div class="flex flex-row justify-end gap-2">
-    <button on:click={closeModal} class="btn btn-outline">Discard</button>
+    <button on:click={closeAddModal} class="btn btn-outline">Discard</button>
     <button on:click={proceed} class="btn btn-primary">Save and continue</button>
   </div>
 </div>

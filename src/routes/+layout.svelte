@@ -1,7 +1,7 @@
 <script lang="ts">
     import "../app.css";
     import { Menu } from "$lib/components/index";
-    import { AddAction } from "$lib/components/actions";
+    import { AddAction, DeleteAction } from "$lib/components/actions";
     import { addToast, closeToast, Toasts } from "$lib/stores/toastStore";
     import IconParkOutlineClose from 'virtual:icons/icon-park-outline/close';
 
@@ -26,16 +26,17 @@
 
 <!-- Modals -->
 <AddAction/>
+<DeleteAction/>
 
 <!-- Toasts -->
 {#if (toasts?.length >= 1)}
-    {#each toasts as toast}
-        <div class="toast">
+    <div class="toast">
+        {#each toasts as toast}
             <div class="alert" class:alert-error={toast.priority === 2} class:alert-info={toast.priority === 0}>
                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>{toast.message}</span>
                 <button on:click={() => closeToast(toast.id)} class="btn btn-square btn-ghost btn-sm"><IconParkOutlineClose/></button>
             </div>
-        </div>
-    {/each}
+        {/each}
+    </div>
 {/if}

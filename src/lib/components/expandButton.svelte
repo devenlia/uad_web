@@ -13,18 +13,9 @@
   <button class="btn btn-square btn-sm text-lg btn-ghost hover:text-red-600">
     <IconParkOutlineDelete/>
   </button>
-  <button class="btn btn-square btn-sm text-lg btn-ghost hover:text-primary">
-    <IconParkOutlineEdit/>
-  </button>
-  <button class="btn btn-square btn-sm text-lg btn-ghost hover:text-primary">
-    <IconParkOutlineWrite/>
-  </button>
-
-
 
   <label class="swap btn btn-square btn-sm text-lg btn-ghost z-50 hover:text-primary">
     <input type="checkbox" bind:checked={expanded}/>
-
     <IconParkOutlineMore class="swap-off fill-current"/>
 
     <IconParkOutlineClose class="swap-on fill-current"/>

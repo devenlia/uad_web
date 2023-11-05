@@ -1,7 +1,11 @@
 import type { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async ({ params}) => {
-    let breadcrumbs = params.page.split("/").map((name, index, array) => {
+    let path = params.page
+
+    if (path.endsWith('/')) path = path.slice(0, -1)
+
+    let breadcrumbs = path.split('/').map((name : string, index : number, array : Array<any>) => {
         return {
             name: name.charAt(0).toUpperCase() + name.slice(1).toLowerCase(),
             href: "/" + array.slice(0, index + 1).join("/")
@@ -14,6 +18,6 @@ export const load: LayoutLoad = async ({ params}) => {
 
     return {
         breadcrumbs: desiredBreadcrumbs,
-        path: params.page.replaceAll(/\//g, '.')
+        path: path.replaceAll(/\//g, '.')
     };
 };
