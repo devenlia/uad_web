@@ -1,7 +1,7 @@
 <script lang="ts">
   import { DelVisible } from "./store";
   import { onMount } from "svelte";
-  import { closeDeleteModal } from ".";
+  import { closeDeleteConfirmation } from "./index";
 
   let visible : boolean;
   DelVisible.subscribe((v) => {visible = v});
@@ -16,7 +16,7 @@
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (visible && event.key === 'Escape') {
-      closeDeleteModal(false);
+      closeDeleteConfirmation(false);
     }
   };
 </script>
@@ -25,8 +25,8 @@
   <div class="modal-box w-screen">
     <h3 class="font-bold text-3xl text-center">Are you sure about that?</h3>
     <div class="modal-action w-full">
-      <label on:click={() => closeDeleteModal(false)} for="my_modal_6" class="btn btn-outline w-1/2">Cancel</label>
-      <label on:click={() => closeDeleteModal(true)} for="my_modal_6" class="btn btn-error w-1/2">Delete</label>
+      <label on:click={() => closeDeleteConfirmation(false)} for="my_modal_6" class="btn btn-outline w-1/2">Cancel</label>
+      <label on:click={() => closeDeleteConfirmation(true)} for="my_modal_6" class="btn btn-error w-1/2">Delete</label>
     </div>
   </div>
 </div>

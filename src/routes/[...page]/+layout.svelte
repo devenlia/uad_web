@@ -3,10 +3,10 @@
     import IconParkOutlinePlus from 'virtual:icons/icon-park-outline/plus';
     import IconParkOutlineMore from 'virtual:icons/icon-park-outline/more-one';
     import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
-    import { openAddModal } from "$lib/components/actions/add";
+    import { openContentWizard } from "../../lib/modals/contentWizard";
     import { goto } from "$app/navigation";
     import { addToast } from "$lib/stores/toastStore";
-    import { openDeleteModal } from "$lib/components/actions/delete";
+    import { openDeleteConfirmation } from "../../lib/modals/deleteConfirmation";
 
     export let data: LayoutData;
 
@@ -21,7 +21,7 @@
 
         if (res.status != 200) {
             let statusText = await res.text();
-            addToast({id: "", priority: 2, message: "Error while trying to delete a page! See console for more information."})
+            addToast({id: "", priority: 2, message: "Error while trying to deleteConfirmation a page! See console for more information."})
             console.log(`Error while trying to delete a page! Status: ${res.status} Message: ${statusText}`);
         }
 
@@ -44,11 +44,11 @@
         </div>
     </div>
     <div class="flex-none">
-        <button on:click={() => openAddModal("select", data.path)} class="btn btn-square btn-ghost text-lg"><IconParkOutlinePlus/></button>
+        <button on:click={() => openContentWizard("select", data.path)} class="btn btn-square btn-ghost text-lg"><IconParkOutlinePlus/></button>
         <div class="dropdown dropdown-end">
             <label tabindex="0" class="btn btn-square btn-ghost text-xl"><IconParkOutlineMore/></label>
             <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                <li><button on:click={() => openDeleteModal(deletePage)} class={data.path === "home" ? "btn-disabled" : ""}><IconParkOutlineDelete/><span>Delete</span></button></li>
+                <li><button on:click={() => openDeleteConfirmation(deletePage)} class={data.path === "home" ? "btn-disabled" : ""}><IconParkOutlineDelete/><span>Delete</span></button></li>
             </ul>
         </div>
     </div>

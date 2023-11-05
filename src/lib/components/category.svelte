@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Category } from "$lib/types";
-  import { openAddModal } from "$lib/components/actions/add";
+  import { openContentWizard } from "../modals/contentWizard";
   import IconParkOutlineDelete from "virtual:icons/icon-park-outline/delete";
-  import { openDeleteModal } from "$lib/components/actions/delete";
+  import { openDeleteConfirmation } from "../modals/deleteConfirmation";
   import { addToast } from "$lib/stores/toastStore";
   import { invalidateAll } from "$app/navigation";
 
@@ -38,11 +38,11 @@
 
     {#if (category.links.length === 0)}
       <div class="flex content-center gap-x-1 relative" style="right: -30px">
-        <button class="btn btn-sm btn-outline z-50" on:click={() => openAddModal("link", null, category.id)}>Add a link!</button>
-        <button class="btn btn-sm btn-outline btn-square hover:btn-error z-50" on:click={() => openDeleteModal(deleteCategory)}><IconParkOutlineDelete/></button>
+        <button class="btn btn-sm btn-outline z-50" on:click={() => openContentWizard("link", null, category.id)}>Add a link!</button>
+        <button class="btn btn-sm btn-outline btn-square hover:btn-error z-50" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete/></button>
       </div>
     {:else}
-      <button class="btn btn-sm btn-square z-50" on:click={() => openDeleteModal(deleteCategory)}><IconParkOutlineDelete/></button>
+      <button class="btn btn-sm btn-square z-50" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete/></button>
     {/if}
   </div>
   <div class="collapse-content">

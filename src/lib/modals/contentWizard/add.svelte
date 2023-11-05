@@ -7,7 +7,7 @@
   import AddCategory from "./addCategory.svelte";
   import AddLink from "./addLink.svelte";
   import { onMount } from 'svelte';
-  import { closeAddModal } from "$lib/components/actions/add/index";
+  import { closeContentWizard } from "$lib/modals/contentWizard/index";
   import { error } from "@sveltejs/kit";
   import { get } from "svelte/store";
 
@@ -34,7 +34,7 @@
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (visible && event.key === 'Escape') {
-      closeAddModal();
+      closeContentWizard();
     }
   };
 </script>
@@ -44,7 +44,7 @@
     <div class="flex flex-row justify-between align-middle">
       <h1 class="text-lg">
         {
-          action === "select" ? "Select the type of content you want to add" :
+          action === "select" ? "Select the type of content you want to contentWizard" :
           action === "page" ? "Add a new subpage to an existing page" :
           action === "container" ? "Add a container" :
           action === "category" ? "Add a category" :
@@ -54,7 +54,7 @@
       </h1>
       <div class="flex flex-row justify-between align-middle gap-1.5">
         <button on:click={() => Tutorial.set(true)} class="btn btn-sm btn-ghost btn-square">?</button>
-        <button on:click={closeAddModal} class="btn btn-sm btn-ghost btn-square"><IconParkOutlineClose/></button>
+        <button on:click={closeContentWizard} class="btn btn-sm btn-ghost btn-square"><IconParkOutlineClose/></button>
       </div>
     </div>
     <div class="divider my-0"></div>

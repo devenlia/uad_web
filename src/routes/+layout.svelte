@@ -1,7 +1,8 @@
 <script lang="ts">
     import "../app.css";
     import { Menu } from "$lib/components/index";
-    import { AddAction, DeleteAction } from "$lib/components/actions";
+    import ContentWizard from "$lib/modals/contentWizard";
+    import DeleteConfirmation from "$lib/modals/deleteConfirmation";
     import { addToast, closeToast, Toasts } from "$lib/stores/toastStore";
     import IconParkOutlineClose from 'virtual:icons/icon-park-outline/close';
 
@@ -25,8 +26,8 @@
 </div>
 
 <!-- Modals -->
-<AddAction/>
-<DeleteAction/>
+<ContentWizard/>
+<DeleteConfirmation/>
 
 <!-- Toasts -->
 {#if (toasts?.length >= 1)}

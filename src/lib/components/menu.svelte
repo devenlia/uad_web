@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Logo from '$lib/images/logo.jpg'
+    import Logo from '$lib/assets/logo.jpg'
     import IconParkOutlineMoon from 'virtual:icons/icon-park-outline/moon';
     import IconParkOutlineSun from 'virtual:icons/icon-park-outline/sun';
     import { onMount } from 'svelte'

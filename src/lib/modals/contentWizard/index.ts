@@ -1,9 +1,10 @@
 import { Visible, Action, Parent, reset, Tutorial } from "./store";
-import { error } from "@sveltejs/kit";
 import { addToast } from "$lib/stores/toastStore";
+import ContentWizard from "./add.svelte";
 
+export default ContentWizard;
 
-export const openAddModal = async (action : string, path? : any, parentId? : any, tutorial? : boolean) => {
+export const openContentWizard = async (action : string, path? : any, parentId? : any, tutorial? : boolean) => {
   let parent : any;
   if (parentId && action !== "select")
     parent = await loadParent(parentId, action)
@@ -17,7 +18,7 @@ export const openAddModal = async (action : string, path? : any, parentId? : any
   Tutorial.set(tutorial?? false)
 }
 
-export async function closeAddModal() {
+export async function closeContentWizard() {
   Visible.set(false);
   await new Promise(f => setTimeout(f, 1000));
   reset();
@@ -53,7 +54,7 @@ const fetchData = async (url: string) => {
   res = await fetch(url);
 
   if (res.status != 200) {
-    await closeAddModal();
+    await closeContentWizard();
 
     addToast({id: "", priority: 2, message: "An error occurred while initializing the wizard. Please check the console for more details."})
     console.error(`An error occurred while initializing the wizard. Status: ${res.status}, Message: ${await res.text()}`);

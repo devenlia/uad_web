@@ -2,7 +2,7 @@
   import type { PageData } from './$types';
   import { SubpageCard, Container } from "$lib/components";
   import { SadCat } from "$lib/assets";
-  import { openAddModal } from "$lib/components/actions/add";
+  import { openContentWizard } from "../../lib/modals/contentWizard";
   import { addToast } from "$lib/stores/toastStore";
 
   export let data : PageData;
@@ -31,7 +31,7 @@
         <h1 class="text-7xl">Welcome to UAD</h1>
         <p class="text-xl mb-10">Your new Unified Application Directory</p>
 
-        <button on:click={() => openAddModal("container", data.page, true)} class="btn btn-outline">Start to add your first link!</button>
+        <button on:click={() => openContentWizard("container", data.page, true)} class="btn btn-outline">Start to add your first link!</button>
         <button on:click={() => {}} class="btn btn-primary">Take a tour.</button>
       </div>
       <div class="w-96">

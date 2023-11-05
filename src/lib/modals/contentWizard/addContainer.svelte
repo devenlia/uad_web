@@ -2,7 +2,7 @@
   import { Action, Parent, Step, Visible } from "./store";
   import { onMount } from "svelte";
   import { error } from "@sveltejs/kit";
-  import { closeAddModal } from "$lib/components/actions/add/index";
+  import { closeContentWizard } from "$lib/modals/contentWizard/index";
   import { invalidateAll } from "$app/navigation";
   import { addToast } from "$lib/stores/toastStore";
 
@@ -29,7 +29,7 @@
     let res : Response = await fetch(`http://localhost:8080/content/page/list`)
 
     if (res.status != 200) {
-      await closeAddModal();
+      await closeContentWizard();
 
       addToast({id: "", priority: 2, message: "An error occurred while initializing the wizard. Please check the console for more details."})
       console.error(`An error occurred while initializing the wizard. Status: ${res.status}, Message: ${await res.text()}`);
@@ -60,7 +60,7 @@
     if (isValidContainerName()) {
       await addContainer()
       await invalidateAll()
-      await closeAddModal()
+      await closeContentWizard()
     }
   }
 
@@ -107,7 +107,7 @@
   </label>
 
   <div class="flex flex-row justify-end gap-2">
-    <button on:click={closeAddModal} class="btn btn-outline">Discard</button>
+    <button on:click={closeContentWizard} class="btn btn-outline">Discard</button>
     <button on:click={proceed} class="btn btn-primary">Save and continue</button>
   </div>
 </div>
