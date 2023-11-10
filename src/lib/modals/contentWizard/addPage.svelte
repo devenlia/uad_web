@@ -76,20 +76,12 @@
   }
 
   const addPage = async () => {
-    let headers = new Headers()
-    headers.set("content-type", "application/json")
+    const formData = new FormData();
+    formData.append("type", 'page')
+    formData.append("name", pageName)
+    formData.append("path", path)
 
-    let res = await fetch("http://localhost:8080/content/page/add", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({name: pageName, path: path})
-    })
-
-    if (res.status !== 200 )  {
-      let statusText = await res.text();
-      addToast({id: "", priority: 2, message: `An error occurred while trying to add page '${pageName}'. Please check the console for detailed information.`})
-      console.error(`Failed to add page '${pageName}'. Status: ${res.status}, Message: ${statusText}`);
-    }
+    await fetch("/?/add", { method: 'POST', body: formData })
   }
 </script>
 

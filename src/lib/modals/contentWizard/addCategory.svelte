@@ -87,20 +87,12 @@
   }
 
   const addCategory = async () => {
-    let headers = new Headers()
-    headers.set("content-type", "application/json")
+    const formData = new FormData();
+    formData.append("type", 'category')
+    formData.append("parentID", parentContainer.id)
+    formData.append("name", categoryName)
 
-    let res = await fetch("http://localhost:8080/content/category/add", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ parentId: parentContainer.id, name: categoryName })
-    })
-
-    if (res.status !== 200 )  {
-      let statusText = await res.text();
-      addToast({id: "", priority: 2, message: `An error occurred while trying to add category '${categoryName}'. Please check the console for detailed information.`})
-      console.error(`Failed to add category '${categoryName}'. Status: ${res.status}, Message: ${statusText}`);
-    }
+    await fetch("/?/add", { method: 'POST', body: formData })
   }
 </script>
 

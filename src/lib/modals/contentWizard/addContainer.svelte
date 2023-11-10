@@ -65,20 +65,12 @@
   }
 
   const addContainer = async () => {
-    let headers = new Headers()
-    headers.set("content-type", "application/json")
+    const formData = new FormData();
+    formData.append("type", 'container')
+    formData.append("name", containerName)
+    formData.append("parentID", parentPage.id)
 
-    let res = await fetch("http://localhost:8080/content/container/add", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ parentId: parentPage.id, name: containerName })
-    })
-
-    if (res.status !== 200 )  {
-      let statusText = await res.text();
-      addToast({id: "", priority: 2, message: `An error occurred while trying to add container '${containerName}'. Please check the console for detailed information.`})
-      console.error(`Failed to add container '${containerName}'. Status: ${res.status}, Message: ${statusText}`);
-    }
+    await fetch("/?/add", { method: 'POST', body: formData })
   }
 </script>
 

@@ -7,23 +7,17 @@
   import { openDeleteConfirmation } from "../modals/deleteConfirmation";
   import IconParkOutlineDelete from "virtual:icons/icon-park-outline/delete";
   import { addToast } from "$lib/stores/toastStore";
-  import { invalidateAll } from "$app/navigation";
+  import { goto, invalidateAll } from "$app/navigation";
   import { openContentWizard } from "../modals/contentWizard";
 
   export let container : Container
 
   const deleteContainer = async () => {
-    let headers = new Headers()
-    headers.set("content-type", "application/json")
+    const formData = new FormData();
+    formData.append("type", 'container')
+    formData.append("id", container.id)
 
-    let res = await fetch(`http://localhost:8080/content/container/delete?id=${container.id}`, {method: "DELETE", headers})
-
-    if (res.status != 200) {
-      let statusText = await res.text();
-      addToast({id: "", priority: 2, message: `Failed to delete the container named ${container.name}. Please check the console for further details.`})
-      console.error(`Failed whilst attempting to delete the container named ${container.name}. Status: ${res.status} Message: ${statusText}`);
-    }
-
+    await fetch("/?/delete", { method: 'POST', body: formData })
     await invalidateAll();
   }
 </script>

@@ -5,37 +5,25 @@
     import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
     import { openContentWizard } from "$lib/modals/contentWizard";
     import { goto } from "$app/navigation";
-    import { addToast } from "$lib/stores/toastStore";
     import { openDeleteConfirmation } from "$lib/modals/deleteConfirmation";
+    import { fetchRequest, getBackendUrl } from "$lib/utils";
 
     export let data: LayoutData;
 
     const getPage = async (path: string) => {
-        let res = await fetch(`http://localhost:8080/content/page/search?path=${path}`);
-
-        if (res.status != 200) {
-            let statusText = await res.text();
-            addToast({id: "", priority: 2, message: "An error occurred while retrieving a page. Please refer to the console logs for further details."});
-            console.error(`Failed to retrieve a page. Status: ${res.status}. Message: ${statusText}`);
-        } else {
-            return await res.json();
-        }
+        let url = getBackendUrl() + `/content/page/search?path=${path}`
+        return await fetchRequest(fetch, url, "GET")
     }
 
     const deletePage = async () => {
         let page = await getPage(data.path);
         if (!page) return;
 
-        let headers = new Headers()
-        headers.set("content-type", "application/json")
+        const formData = new FormData();
+        formData.append("type", 'page')
+        formData.append("id", page.id)
 
-        let res = await fetch(`http://localhost:8080/content/page/delete?id=${page.id}`, {method: "DELETE"})
-
-        if (res.status != 200) {
-            let statusText = await res.text();
-            addToast({id: "", priority: 2, message: `An error occurred while trying to delete the page '${page.name}'. Please check the console logs for more details.`});
-            console.error(`Failed to delete the page ${page.name}. Status: ${res.status}. Message: ${statusText}`);
-        }
+        await fetch("/?/delete", { method: 'POST', body: formData })
 
         await goto("../")
     }
