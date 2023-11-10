@@ -1,5 +1,3 @@
-import SadCat from './sad-cat.svg'
+import SadCat from './sad-cat.svg';
 
-export {
-  SadCat
-}
+export { SadCat };
