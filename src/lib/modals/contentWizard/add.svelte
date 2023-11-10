@@ -1,15 +1,13 @@
 <script lang="ts">
 	import IconParkOutlineRight from 'virtual:icons/icon-park-outline/right';
 	import IconParkOutlineClose from 'virtual:icons/icon-park-outline/close';
-	import { Step, Visible, Action, Tutorial, Parent } from './store';
+	import { Visible, Action, Tutorial } from './store';
 	import AddPage from './addPage.svelte';
 	import AddContainer from './addContainer.svelte';
 	import AddCategory from './addCategory.svelte';
 	import AddLink from './addLink.svelte';
 	import { onMount } from 'svelte';
 	import { closeContentWizard } from '$lib/modals/contentWizard/index';
-	import { error } from '@sveltejs/kit';
-	import { get } from 'svelte/store';
 
 	let visible: boolean;
 	Visible.subscribe((v) => {

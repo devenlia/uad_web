@@ -3,7 +3,6 @@
 	import { openContentWizard } from '../modals/contentWizard';
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
 	import { openDeleteConfirmation } from '../modals/deleteConfirmation';
-	import { addToast } from '$lib/stores/toastStore';
 	import { invalidateAll } from '$app/navigation';
 
 	export let category: Category;

@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { Action, Parent, Step, Visible } from './store';
+	import { Action, Parent, Visible } from './store';
 	import { onMount } from 'svelte';
-	import { error } from '@sveltejs/kit';
 	import { closeContentWizard } from '$lib/modals/contentWizard/index';
 	import { invalidateAll } from '$app/navigation';
 	import { addToast } from '$lib/stores/toastStore';

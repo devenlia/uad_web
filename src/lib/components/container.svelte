@@ -6,8 +6,7 @@
 	import IconParkOutlinePlus from 'virtual:icons/icon-park-outline/plus';
 	import { openDeleteConfirmation } from '../modals/deleteConfirmation';
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
-	import { addToast } from '$lib/stores/toastStore';
-	import { goto, invalidateAll } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 	import { openContentWizard } from '../modals/contentWizard';
 
 	export let container: Container;

@@ -1,5 +1,4 @@
-import { type Writable, writable } from 'svelte/store';
-import type { Page } from '$lib/types';
+import { writable } from 'svelte/store';
 
 export const Visible = writable(false);
 export const Action = writable('select');

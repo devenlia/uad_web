@@ -3,7 +3,7 @@
 	import { Menu } from '$lib/components/index';
 	import ContentWizard from '$lib/modals/contentWizard';
 	import DeleteConfirmation from '$lib/modals/deleteConfirmation';
-	import { addToast, closeToast, Toasts } from '$lib/stores/toastStore';
+	import { closeToast, Toasts } from '$lib/stores/toastStore';
 	import IconParkOutlineClose from 'virtual:icons/icon-park-outline/close';
 
 	let toasts: any;
