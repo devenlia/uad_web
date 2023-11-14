@@ -1,19 +1,19 @@
 import type { RequestHandler } from './$types';
 import { fetchRequest, getBackendUrl } from '$lib/utils.server';
 
-const getData = (data: FormData) => {
-	const type = data.get('type');
-	const id = data.get('id') ?? data.get('path');
+const getData = (params: URLSearchParams) => {
+	const type = params.get('type');
+	const id = params.get('id') ?? params.get('path');
 
 	return { type, id };
 };
 
-export const GET: RequestHandler = async ({ request }) => {
-	const data = getData(await request.formData());
+export const GET: RequestHandler = async ({ url }) => {
+	const data = getData(url.searchParams);
 
-	let url: string;
-	if (data.type == 'search') url = getBackendUrl() + `/content/page/search?path=${data.id}`;
-	else url = getBackendUrl() + `/content/${data.type}/get?id=${data.id}`;
+	let getUrl: string;
+	if (data.type == 'search') getUrl = getBackendUrl() + `/content/page/search?path=${data.id}`;
+	else getUrl = getBackendUrl() + `/content/${data.type}/get?id=${data.id}`;
 
-	return await fetchRequest(fetch, url, 'GET');
+	return new Response(JSON.stringify(await fetchRequest(fetch, getUrl, 'GET')));
 };

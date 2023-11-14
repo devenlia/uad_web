@@ -10,11 +10,7 @@
 	export let data: LayoutData;
 
 	const getPage = async (path: string) => {
-		let formData = new FormData();
-		formData.append('type', 'search');
-		formData.append('id', path);
-
-		let res = await fetch('/get', { method: 'GET', body: formData });
+		let res = await fetch(`/get?type=search&path=${path}`);
 
 		return await res.json();
 	};
