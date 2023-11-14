@@ -1,5 +1,5 @@
 import type { Actions } from './$types';
-import { fetchRequest, getBackendUrl } from '$lib/utils';
+import { fetchRequest, getBackendUrl } from '$lib/utils.server';
 
 const getAddData = (data: FormData) => {
 	const type = data.get('type');

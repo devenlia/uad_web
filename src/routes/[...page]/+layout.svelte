@@ -6,13 +6,17 @@
 	import { openContentWizard } from '$lib/modals/contentWizard';
 	import { goto } from '$app/navigation';
 	import { openDeleteConfirmation } from '$lib/modals/deleteConfirmation';
-	import { fetchRequest, getBackendUrl } from '$lib/utils';
 
 	export let data: LayoutData;
 
 	const getPage = async (path: string) => {
-		let url = getBackendUrl() + `/content/page/search?path=${path}`;
-		return await fetchRequest(fetch, url, 'GET');
+		let formData = new FormData();
+		formData.append('type', 'search')
+		formData.append('id', path)
+
+		let res = await fetch('/get', { method: 'GET', body: formData });
+
+		return await res.json();
 	};
 
 	const deletePage = async () => {

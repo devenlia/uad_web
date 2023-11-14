@@ -1,9 +1,9 @@
 import { error } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 import type { Page } from '$lib/types';
-import { getBackendUrl } from '$lib/utils';
+import { getBackendUrl } from '$lib/utils.server';
 
-export const load: PageLoad = async ({ params, fetch }) => {
+export const load: PageServerLoad = async ({ params, fetch }) => {
 	let res: Response;
 
 	if (params.page == '' || params.page.toLowerCase() == 'home') {
