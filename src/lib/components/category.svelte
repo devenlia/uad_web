@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Category } from '$lib/types';
+	import type { Category, Link } from '$lib/types';
 	import { openContentWizard } from '../modals/contentWizard';
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
 	import { openDeleteConfirmation } from '../modals/deleteConfirmation';
@@ -34,7 +34,9 @@
 	<div class="collapse-content">
 		<div class="grid grid-cols-8 gap-3">
 			{#each category.links as link}
-				<a target="_blank" class="btn" href={link.href}>{link.name}</a>
+				{#if ('href' in link) && ('name' in link)}
+					<a target="_blank" class="btn" href={link.href?.toString() ?? '/'}>{link.name}</a>
+				{/if}
 			{/each}
 		</div>
 	</div>
