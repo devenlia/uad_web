@@ -34,7 +34,7 @@
 	<div class="collapse-content">
 		<div class="grid grid-cols-8 gap-3">
 			{#each category.links as link}
-				{#if ('href' in link) && ('name' in link)}
+				{#if 'href' in link && 'name' in link}
 					<a target="_blank" class="btn" href={link.href?.toString() ?? '/'}>{link.name}</a>
 				{/if}
 			{/each}

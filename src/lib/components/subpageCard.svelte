@@ -4,7 +4,7 @@
 
 	export let subpage: SubPage;
 
-	$: href = '/' + ('path' in subpage ? subpage.path?.toString().replaceAll(/\./g, '/') : '') ;
+	$: href = '/' + ('path' in subpage ? subpage.path?.toString().replaceAll(/\./g, '/') : '');
 </script>
 
 <a {href} class="card bg-base-200 hover:bg-base-300 hover:cursor-pointer hover:text-primary">

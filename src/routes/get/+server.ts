@@ -11,11 +11,9 @@ const getData = (data: FormData) => {
 export const GET: RequestHandler = async ({ request }) => {
 	const data = getData(await request.formData());
 
-	let url : string;
-	if (data.type == "search")
-		url = getBackendUrl() + `/content/page/search?path=${data.id}`;
-	else
-		url = getBackendUrl() + `/content/${data.type}/get?id=${data.id}`;
+	let url: string;
+	if (data.type == 'search') url = getBackendUrl() + `/content/page/search?path=${data.id}`;
+	else url = getBackendUrl() + `/content/${data.type}/get?id=${data.id}`;
 
 	return await fetchRequest(fetch, url, 'GET');
 };

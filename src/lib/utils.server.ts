@@ -24,5 +24,3 @@ export const fetchRequest = async (fetch: any, url: string, method: HttpMethod, 
 		return { status: res.status };
 	} else return method != 'DELETE' ? await res.json() : null;
 };
-
-

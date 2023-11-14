@@ -11,8 +11,8 @@
 
 	const getPage = async (path: string) => {
 		let formData = new FormData();
-		formData.append('type', 'search')
-		formData.append('id', path)
+		formData.append('type', 'search');
+		formData.append('id', path);
 
 		let res = await fetch('/get', { method: 'GET', body: formData });
 

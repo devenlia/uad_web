@@ -18,4 +18,3 @@ services:
 networks:
   uad_network:
     name: uad_network
-
