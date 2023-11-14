@@ -5,7 +5,7 @@ RUN npm ci
 COPY . .
 RUN npm run check
 RUN npm run build
-RUN npm prune --production
+RUN npm ci --only=production
 
 FROM node:lts-slim
 WORKDIR /app
