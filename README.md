@@ -1,38 +1,27 @@
-# create-svelte
+# UAD - Unified Application Directory
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Welcome to UAD (Unified Application Directory)! This promising project, currently in development, is designed to streamline the way businesses and organizations manage their numerous links, particularly where there are many web applications in use, such as vCenter Firewall and others. Focused on productivity and efficiency, UAD keeps all your necessary links categorized and centralized!
 
-## Creating a project
+## What is UAD?
 
-If you're seeing this, you've probably already done this step. Congrats!
+Unified Application Directory (UAD) is a unique solution to manage the clutter of links that come with using multiple web applications. It categorizes and stores links, providing a centralised hub, thereby offering a smooth navigation experience. Developed with modern technologies, UAD is both robust and user-friendly.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Why should you use UAD?
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+Simplicity is the ultimate sophistication. UAD attempts just to simplify the way organizations work with multiple web applications. By providing a categorized and centralized repository of the links, UAD allows you to focus more on your tasks and less on managing and remembering links to several web applications. Being in active development, UAD aims to constantly enhance and incorporate features that resolve the users' pain points effectively.
 
-## Developing
+## Testing Dev Releases
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Though UAD is currently under development, you can get a sneak peek into its functionality. You can try out the development releases using the provided `docker-compose.yml` file. While the releases are stable, remember they are development versions and may not have all the finalized features.
 
-```bash
-npm run dev
+## Release Notes
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+An overview of the latest changes, improvements, and known bugs can be found in our [Release Notes](./RELEASE_NOTES.md)/ [Dev Release Notes](./DEV_RELEASE_NOTES.md).
 
-## Building
+## Support & Contribution
 
-To create a production version of your app:
+We warmly welcome you to help us improve UAD. If you find a bug, please do not hesitate to open an issue. If you are interested in contributing to the code base, pull requests are always welcome!
 
-```bash
-npm run build
-```
+## Future Aspirations
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+We are looking forward to the growth, enhancements, and success of the UAD. Thank you for your interest in the Unified Application Directory. We’re excited to see the value it brings to your organization!

@@ -1,19 +1,19 @@
-import { DelVisible } from "./store";
-import DeleteConfirmation from "./deleteConfirmation.svelte"
+import { DelVisible } from './store';
+import DeleteConfirmation from './deleteConfirmation.svelte';
 
 export default DeleteConfirmation;
 
-let action : any = null;
+let action: any = null;
 
-export function openDeleteConfirmation(act : any) {
-  action = act;
-  DelVisible.set(true);
+export function openDeleteConfirmation(act: any) {
+	action = act;
+	DelVisible.set(true);
 }
 
-export const closeDeleteConfirmation = (act : boolean) => {
-  if (act) {
-    action();
-  }
+export const closeDeleteConfirmation = (act: boolean) => {
+	if (act) {
+		action();
+	}
 
-  DelVisible.set(false);
-}
+	DelVisible.set(false);
+};
