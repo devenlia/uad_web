@@ -30,8 +30,12 @@
 				<h1 class="text-7xl">Welcome to UAD</h1>
 				<p class="text-xl mb-10">Your new Unified Application Directory</p>
 
-				<button on:click={() => openContentWizard('container', data.page, true)} class="btn btn-outline">Start to add your first link!</button>
-				<button on:click={() => {}} class="btn btn-primary">Take a tour.</button>
+				<div class="tooltip" data-tip="Not fully implemented.">
+					<button on:click={() => openContentWizard('container', null, data.page.id, true)} class="btn btn-outline">Start to add your first link!</button>
+				</div>
+				<div class="tooltip" data-tip="Not yet implemented.">
+					<button on:click={() => {}} class="btn btn-primary btn-disabled" >Take a tour.</button>
+				</div>
 			</div>
 			<div class="w-96">
 				<img src={SadCat} alt="SadCat" />

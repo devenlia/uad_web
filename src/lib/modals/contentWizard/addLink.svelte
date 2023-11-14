@@ -5,6 +5,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { addToast } from '$lib/stores/toastStore';
 	import validator from 'validator';
+	import { throwError } from '$lib/utils';
 
 	const handleKeyDown = (event: KeyboardEvent) => {
 		if ($Visible && $Action == 'link' && event.key === 'Enter') {
@@ -29,7 +30,7 @@
 	let hrefInvalidMessage: string | null = null;
 
 	let parentPage: any = $Parent.page;
-	let parentPages: Promise<Array<any>> = loadParentPages();
+	let parentPages: Promise<any> = loadParentPages();
 
 	let parentContainer: any = $Parent.container;
 	let parentContainers: any = parentPage.containers;
@@ -38,16 +39,15 @@
 	let parentCategories: any = parentPage.containers;
 
 	async function loadParentPages() {
-		let res: Response = await fetch(`http://localhost:8080/content/page/list`);
+		let res: Response = await fetch(`/get?type=list`);
 
 		if (res.status != 200) {
 			await closeContentWizard();
-
-			addToast({ id: '', priority: 2, message: 'An error occurred while initializing the wizard. Please check the console for more details.' });
-			console.error(`An error occurred while initializing the wizard. Status: ${res.status}, Message: ${await res.text()}`);
+			throwError(res.status, await res.text())
 		}
 
 		let pages = await res.json();
+		console.log(pages);
 		parentPage = pages.find((obj: any) => obj.id === parentPage.id);
 		changeParentPage();
 
@@ -55,11 +55,11 @@
 	}
 
 	const changeParentPage = () => {
-		parentContainers = parentPage.containers;
+		parentContainers = parentPage.containers ?? [];
 		parentContainer = parentPage.containers.find((obj: any) => obj.id === parentContainer?.id) ?? parentPage.containers[0];
 
-		parentCategories = parentContainer.categories;
-		parentCategory = parentContainer.categories.find((obj: any) => obj.id === parentCategory?.id) ?? parentContainer.categories[0];
+		parentCategories = parentContainer?.categories;
+		parentCategory = parentContainer?.categories.find((obj: any) => obj.id === parentCategory?.id) ?? parentContainer?.categories[0];
 	};
 
 	const changeParentContainer = () => {

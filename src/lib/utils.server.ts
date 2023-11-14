@@ -19,8 +19,5 @@ export const fetchRequest = async (fetch: any, url: string, method: HttpMethod, 
 
 	let res = await fetch(url, { headers, method, body });
 
-	if (res.status !== 200) {
-		throwError(res.status, await res.text());
-		return { status: res.status };
-	} else return method != 'DELETE' ? await res.json() : null;
+	return method != 'DELETE' ? await res.json() : null;
 };

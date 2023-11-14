@@ -62,11 +62,11 @@
 </script>
 
 <div class="modal" class:modal-open={visible}>
-	<div class="modal-box w-screen">
+	<div class="modal-box w-screen overflow-visible">
 		<div class="flex flex-row justify-between align-middle">
 			<h1 class="text-lg">
 				{action === 'select'
-					? 'Select the type of content you want to contentWizard'
+					? 'Select the type of content you want to add'
 					: action === 'page'
 					? 'Add a new subpage to an existing page'
 					: action === 'container'
@@ -78,7 +78,9 @@
 					: 'Add new content to your UAD'}
 			</h1>
 			<div class="flex flex-row justify-between align-middle gap-1.5">
-				<button on:click={() => Tutorial.set(true)} class="btn btn-sm btn-ghost btn-square">?</button>
+				<div class="tooltip" data-tip="Not yet implemented.">
+					<button on:click={() => Tutorial.set(true)} class="btn btn-sm btn-ghost btn-square btn-disabled">?</button>
+				</div>
 				<button on:click={closeContentWizard} class="btn btn-sm btn-ghost btn-square"><IconParkOutlineClose /></button>
 			</div>
 		</div>
