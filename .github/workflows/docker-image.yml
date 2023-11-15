@@ -41,3 +41,4 @@ jobs:
           tags: |
             jannisdev/uad_web:${{ env.PACKAGE_VERSION }}
             jannisdev/uad_web:latest
+          platforms: linux/amd64,linux/arm64
