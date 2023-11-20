@@ -2,7 +2,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { SubpageCard, Container } from '$lib/components';
-	import { SadCat } from '$lib/assets';
+	import { PlaceholderCat, SadCat } from '$lib/assets';
 	import { openContentWizard } from '$lib/modals/contentWizard';
 
 	export let data: PageData;
@@ -24,22 +24,21 @@
 	{#each data.page.containers as container}
 		<Container {container} />
 	{/each}
-{:else}
-	<div class="h-full w-full flex justify-center content-center">
-		<div class="mt-40 h-min flex flex-row content-center">
-			<div class="w-96">
-				<h1 class="text-7xl">Welcome to UAD</h1>
+{:else if data.page.path === "home"}
+	<div class="h-screen w-full flex justify-center items-center -z-[5] top-0 left-0 absolute">
+		<div class="h-min flex flex-row items-center">
+			<div class="w-max">
+				<h1 class="text-7xl">Welcome to <br/> UAD</h1>
 				<p class="text-xl mb-10">Your new Unified Application Directory</p>
 
-				<div class="tooltip" data-tip="Not fully implemented.">
-					<button on:click={() => openContentWizard('container', null, data.page.id, true)} class="btn btn-outline">Start to add your first link!</button>
-				</div>
+				<button on:click={() => openContentWizard('container', null, data.page.id, true)} class="btn btn-outline">Start to add your first container!</button>
 				<div class="tooltip" data-tip="Not yet implemented.">
 					<button on:click={() => {}} class="btn btn-primary btn-disabled" >Take a tour.</button>
 				</div>
 			</div>
-			<div class="w-96">
-				<img src={SadCat} alt="SadCat" />
+
+			<div class="w-max h-min">
+				<img height="200px" width="200px" src={PlaceholderCat} alt="SadCat" />
 			</div>
 		</div>
 	</div>
