@@ -9,6 +9,7 @@
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
 	import { invalidateAll } from '$app/navigation';
 	import { openContentWizard } from '../modals/contentWizard';
+	import { PlaceholderCat } from '$lib/assets';
 
 	export let container: Container;
 
@@ -39,13 +40,13 @@
 			<Category {category} />
 		{:else}
 			<div class="flex flex-row h-20 w-full justify-center content-center">
-				<div class="chat chat-end w-52 h-max">
-					<div class="chat-bubble w-full chat-bubble-accent">
-						<h2 class="text-lg font-bold whitespace-nowrap">Ups, no category!</h2>
-						<button on:click={() => openContentWizard('category', null, container.id)} class="btn btn-outline text-white border-white hover:bg-white btn-sm w-max">Add one!</button>
+				<div class="chat chat-end h-max">
+					<div class="chat-bubble chat-bubble-accent max-w-max flex flex-col justify-center content-center">
+						<h2 class="text-lg font-bold whitespace-nowrap w-max">Oh no, there are no categories yet!</h2>
+						<button on:click={() => openContentWizard('category', null, container.id)} class="btn btn-ghost btn-sm">Let's add one!</button>
 					</div>
 				</div>
-				<img src={Catty} alt="Catty" />
+				<img src={PlaceholderCat} alt="Catty" />
 			</div>
 		{/each}
 	</div>
