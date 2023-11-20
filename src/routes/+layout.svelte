@@ -21,11 +21,9 @@
 	<link rel="icon" href="/favicon.png" />
 </svelte:head>
 
-<div class="flex flex-row p-3 h-full overflow-hidden font-default">
+<div class="flex flex-row p-3 h-full overflow-hidden font-default gap-3">
 	<Menu />
-	<div class="ml-3 w-full" id="page">
-		<slot />
-	</div>
+	<slot />
 </div>
 
 <!-- Modals -->

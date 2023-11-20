@@ -30,32 +30,34 @@
 	};
 </script>
 
-<header class="navbar bg-base-200 rounded-box w-full">
-	<div class="flex-1">
-		<div class="text-2xl breadcrumbs">
-			<ul>
-				{#if data.breadcrumbs && data.breadcrumbs.length > 1}
-					{#each data.breadcrumbs as breadcrumb}
-						<li><a href={breadcrumb.href} class="btn btn-sm btn-ghost normal-case text-lg !no-underline hover:text-primary">{breadcrumb.name}</a></li>
-					{/each}
-				{:else}
-					<li><a href="/" class="btn btn-sm btn-ghost normal-case text-lg !no-underline hover:text-primary">Home</a></li>{/if}
-			</ul>
+<div class="h-screen w-full">
+	<header class="fixed top-3 right-3" style="left: 89px">
+		<div class="navbar bg-base-200 rounded-box">
+			<div class="flex-1">
+				<div class="text-2xl breadcrumbs">
+					<ul>
+						{#if data.breadcrumbs && data.breadcrumbs.length > 1}
+							{#each data.breadcrumbs as breadcrumb}
+								<li><a href={breadcrumb.href} class="btn btn-sm btn-ghost normal-case text-lg !no-underline hover:text-primary">{breadcrumb.name}</a></li>
+							{/each}
+						{:else}
+							<li><a href="/" class="btn btn-sm btn-ghost normal-case text-lg !no-underline hover:text-primary">Home</a></li>{/if}
+					</ul>
+				</div>
+			</div>
+			<div class="flex-none">
+				<button on:click={() => openContentWizard('select', data.path)} class="btn btn-square btn-ghost text-lg m-1"><IconParkOutlinePlus /></button>
+				<details class="dropdown dropdown-end">
+					<summary class="btn btn-square btn-ghost text-xl m-1"><IconParkOutlineMore /></summary>
+					<ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+						<li><button on:click={() => openDeleteConfirmation(deletePage)} class={data.path === 'home' ? 'btn-disabled' : ''}><IconParkOutlineDelete /><span>Delete</span></button></li>
+					</ul>
+				</details>
+			</div>
 		</div>
-	</div>
-	<div class="flex-none">
-		<button on:click={() => openContentWizard('select', data.path)} class="btn btn-square btn-ghost text-lg m-1"><IconParkOutlinePlus /></button>
-		<details class="dropdown dropdown-end">
-			<summary class="btn btn-square btn-ghost text-xl m-1"><IconParkOutlineMore /></summary>
-			<ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-				<li><button on:click={() => openDeleteConfirmation(deletePage)} class={data.path === 'home' ? 'btn-disabled' : ''}><IconParkOutlineDelete /><span>Delete</span></button></li>
-			</ul>
-		</details>
-	</div>
-</header>
+	</header>
 
-<div class="overflow-y-auto">
-	<div class="pt-3">
+	<div class="h-screen" style="padding-top: 84px">
 		<slot />
 	</div>
 </div>
