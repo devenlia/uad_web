@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import { writable } from 'svelte/store';
 
 interface Toast {

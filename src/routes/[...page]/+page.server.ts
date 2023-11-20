@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { Page } from '$lib/types';

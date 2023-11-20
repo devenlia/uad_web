@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Catty from '$lib/assets/catty.svg?raw';

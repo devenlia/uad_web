@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import { DelVisible } from './store';
 import DeleteConfirmation from './deleteConfirmation.svelte';
 

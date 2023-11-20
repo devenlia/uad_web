@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import IconParkOutlineRight from 'virtual:icons/icon-park-outline/right';
 	import type { SubPage } from '$lib/types';

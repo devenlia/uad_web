@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Action, Parent, Visible } from './store';

@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import '../app.css';
 	import { Menu } from '$lib/components/index';

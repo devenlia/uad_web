@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import { Visible, Action, Parent, reset, Tutorial } from './store';
 import { addToast } from '$lib/stores/toastStore';
 import ContentWizard from './add.svelte';

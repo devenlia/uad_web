@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { SubpageCard, Container } from '$lib/components';

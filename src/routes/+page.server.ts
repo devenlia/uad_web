@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import type { Actions } from './$types';
 import { fetchRequest, getBackendUrl } from '$lib/utils.server';
 

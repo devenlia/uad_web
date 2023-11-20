@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import type { Container } from '$lib/types';
 	import { Category } from '$lib/components/index';

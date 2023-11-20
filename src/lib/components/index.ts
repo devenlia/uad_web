@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import menu from './menu.svelte';
 import subpageCard from './subpageCard.svelte';
 import container from './container.svelte';

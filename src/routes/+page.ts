@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import type { PageLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 

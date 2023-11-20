@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import { DelVisible } from './store';
 	import { onMount } from 'svelte';

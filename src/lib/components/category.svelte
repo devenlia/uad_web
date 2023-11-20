@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import type { Category, Link } from '$lib/types';
 	import { openContentWizard } from '../modals/contentWizard';

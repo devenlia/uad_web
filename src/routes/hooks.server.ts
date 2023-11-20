@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ resolve, event }) => {

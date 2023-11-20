@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import { env } from '$env/dynamic/private';
 import { dev } from '$app/environment';
 import type { HttpMethod } from '@sveltejs/kit';

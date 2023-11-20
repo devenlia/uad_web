@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import type { LayoutLoad } from './$types';
 
 export const trailingSlash = 'never';

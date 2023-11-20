@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import Logo from '$lib/assets/logo.jpg';
 	import IconParkOutlineMoon from 'virtual:icons/icon-park-outline/moon';

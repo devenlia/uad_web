@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 // Equivalent to Page.java
 export type Page = {
 	id: string;

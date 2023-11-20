@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import type { LayoutData } from './$types';
 	import IconParkOutlinePlus from 'virtual:icons/icon-park-outline/plus';

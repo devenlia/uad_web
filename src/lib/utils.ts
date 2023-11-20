@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import { addToast } from '$lib/stores/toastStore';
 
 export const throwError = (status: number, text: string) => {

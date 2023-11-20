@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import type { RequestHandler } from './$types';
 import { fetchRequest, getBackendUrl } from '$lib/utils.server';
 
