@@ -1,22 +1,66 @@
+# Configuration for Docker standalone instances
+
 version: '3.5'
+
 services:
-  db:
-    image: mongo:latest
+  db: # Replace with your own Database instance if available
     container_name: db
+    image: mongo:latest
+    restart: unless-stopped
     ports:
       - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: uad_access # Modify this if necessary
+      MONGO_INITDB_ROOT_PASSWORD: password123 # Modify this if necessary
     networks:
-      - uad_network
-  backend:
-    container_name: backend
+      - internal
+    volumes:
+      - db_data:/data/db
+
+  server:
+    container_name: server
     image: jannisdev/uad:latest
-    ports:
-      - "8080:8080"
+    restart: unless-stopped
     depends_on:
       - db
+    environment:
+      MONGO_AUTH: auth # Use 'noauth' to disable Authentication
+      MONGO_USERNAME: uad_access # Modify this if necessary
+      MONGO_PASSWORD: password123 # Modify this if necessary
+      MONGO_SERVER: db:27017 # Update this if you're using other Container-names
+      MONGO_DATABASE: uad
     networks:
-      - uad_network
+      - db
+      - internal
+
+  web:
+    container_name: web
+    image: jannisdev/uad_web:latest # Use :dev-latest for the Development Branch
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - server
+    environment:
+      BACKEND_SERVER: server:8080
+    networks:
+      - internal
+volumes:
+  db_data:
+    driver: local
+
+# For NFS-Shares option, uncomment the following:
+#volumes:
+#  db_data:
+#    driver: local
+#    driver_opts:
+#      type: nfs
+#      o: addr=docker-fs,nolock,hard,rw
+#      device: ":/<PATH_ON_FS>"
 
 networks:
-  uad_network:
-    name: uad_network
+  db:
+    driver: bridge
+  internal:
+    driver: bridge

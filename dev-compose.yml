@@ -1,0 +1,27 @@
+# This file is intended for development use only, to start the required backend
+
+version: '3.5'
+services:
+  db:
+    image: mongo:latest
+    container_name: db
+    ports:
+      - "27017:27017"
+    networks:
+      - uad_network
+  backend:
+    container_name: backend
+    image: jannisdev/uad:latest
+    environment:
+      MONGO_AUTH: noauth
+      MONGO_SERVER: db:27017
+      MONGO_DATABASE: uad
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - uad_network
+networks:
+  uad_network:
+    name: uad_network
