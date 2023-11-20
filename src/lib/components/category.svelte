@@ -18,7 +18,7 @@
 	};
 </script>
 
-<div class="collapse bg-base-200 {category.links.length > 0 ? 'collapse-arrow' : 'collapse-close'}">
+<div class="collapse bg-base-200 mb-3 {category.links.length > 0 ? 'collapse-arrow' : 'collapse-close'}">
 	<input type="checkbox" />
 	<div class="collapse-title text-xl font-medium flex flex-row justify-between">
 		{category.name}
