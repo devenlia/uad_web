@@ -10,7 +10,7 @@
 
 	onMount(() => {
 		themeChange(false);
-		lightTheme = document.documentElement.getAttribute('data-theme') == 'light';
+		lightTheme = document.documentElement.getAttribute('data-theme') !== 'dark';
 	});
 </script>
 
