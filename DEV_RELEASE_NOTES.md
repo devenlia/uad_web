@@ -1,5 +1,22 @@
 # Release Notes
 
+---
+
+## Dev 1.1.1
+
+### Improvements:
+
+- Fixed a bug that caused unusual behavior when opening the content wizard.
+- Enhanced error handling in the backend API.
+- Enabled Cross-Origin to run the application in Docker.
+
+### Known Bugs:
+
+- Currently, there is no way to delete links (Not yet implemented).
+- Some UI elements lack appropriate margins, which may lead to odd appearances.
+
+---
+
 ## Version Dev 1.1.0 (Similar to Release 1.1.0)
 
 ### Improvements:
