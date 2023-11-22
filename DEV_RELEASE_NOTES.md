@@ -2,6 +2,22 @@
 
 ---
 
+## Dev 1.1.2
+
+We've made some UI changes. However, our model cat wasn't ready for the photoshoot, so our grumpy cat had to step in as a placeholder.
+P.S. He wasn't amused about it but was obliged to do so. Please, be gentle with him.
+
+### Improvements:
+
+- UI Improvements
+
+### Known Bugs:
+
+- At present, deletion of links is not supported (Implementation in progress).
+- Occasionally, the Theme Switcher can behave inconsistently.
+
+---
+
 ## Dev 1.1.1
 
 ### Improvements:
