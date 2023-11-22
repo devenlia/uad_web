@@ -1,10 +1,10 @@
 <!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
-	import Logo from '$lib/assets/logo.jpg';
 	import IconParkOutlineMoon from 'virtual:icons/icon-park-outline/moon';
 	import IconParkOutlineSun from 'virtual:icons/icon-park-outline/sun';
 	import { onMount } from 'svelte';
 	import { themeChange } from 'theme-change';
+	import { Logo } from '$lib/assets';
 
 	let lightTheme: boolean;
 
@@ -17,7 +17,7 @@
 <div class="menu bg-base-200 rounded-box h-full flex justify-between">
 	<ul>
 		<li class="w-12 h-12">
-			<a class="p-0" href="/"><img class="mask mask-squircle p-0" alt="Logo" src={Logo} /></a>
+			<a class="w-full h-full p-1" href="/"><img width="100%" height="100%" alt="Logo" src={Logo}/></a>
 		</li>
 	</ul>
 
