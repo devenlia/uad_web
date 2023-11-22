@@ -1,10 +1,11 @@
 <!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
-	import type { Category, Link } from '$lib/types';
+	import type { Category } from '$lib/types';
 	import { openContentWizard } from '../modals/contentWizard';
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
 	import { openDeleteConfirmation } from '../modals/deleteConfirmation';
 	import { invalidateAll } from '$app/navigation';
+	import { Grid, Link } from '$lib/components';
 
 	export let category: Category;
 
@@ -16,9 +17,14 @@
 		await fetch('/?/delete', { method: 'POST', body: formData });
 		await invalidateAll();
 	};
+
+	let items = category.links;
+	const onLinkDrop = (newItems : any) => {
+ 		items = newItems;
+	}
 </script>
 
-<div class="collapse bg-base-200 mb-3 {category.links.length > 0 ? 'collapse-arrow' : 'collapse-close'}">
+<div class="collapse bg-base-200 mb-3 w-full {category.links.length > 0 ? 'collapse-arrow' : 'collapse-close'}">
 	<input type="checkbox" />
 	<div class="collapse-title text-xl font-medium flex flex-row justify-between">
 		{category.name}
@@ -32,13 +38,9 @@
 			<button class="btn btn-sm btn-square z-50" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete /></button>
 		{/if}
 	</div>
-	<div class="collapse-content">
-		<div class="grid grid-cols-8 gap-3">
-			{#each category.links as link}
-				{#if 'href' in link && 'name' in link}
-					<a target="_blank" class="btn" href={link.href?.toString() ?? '/'}>{link.name}</a>
-				{/if}
-			{/each}
+	<div class="collapse-content w-full">
+		<div class="w-full max-w-full">
+			<Grid itemsData={items} itemComponent={Link} onDrop={onLinkDrop}/>
 		</div>
 	</div>
 </div>

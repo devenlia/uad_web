@@ -23,7 +23,7 @@
 	};
 </script>
 
-<div class="mt-5 border-2 border-gray-400 rounded-box">
+<div class="mt-5 border-2 border-gray-400 rounded-box w-full">
 	<div class="text-2xl bg-base-100 relative w-max px-3 py-1 rounded-box flex flex-row group" style="top: -20px; left: 20px">
 		<h1>{container.name}</h1>
 		<details class="dropdown">
@@ -35,7 +35,7 @@
 		</details>
 	</div>
 
-	<div class="px-3 pb-3">
+	<div class="px-3 pb-3 w-full">
 		{#each container.categories as category}
 			<Category {category} />
 		{:else}
