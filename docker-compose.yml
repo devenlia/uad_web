@@ -11,7 +11,8 @@ services:
       - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: uad_access # Modify this if necessary
-      MONGO_INITDB_ROOT_PASSWORD: password123 # Modify this if necessary
+      MONGO_INITDB_ROOT_PASSWORD: password123 # Modify this
+      MONGO_INITDB_DATABASE: uad
     networks:
       - internal
     volumes:
@@ -26,7 +27,7 @@ services:
     environment:
       MONGO_AUTH: auth # Use 'noauth' to disable Authentication
       MONGO_USERNAME: uad_access # Modify this if necessary
-      MONGO_PASSWORD: password123 # Modify this if necessary
+      MONGO_PASSWORD: password123 # Modify this
       MONGO_SERVER: db:27017 # Update this if you're using other Container-names
       MONGO_DATABASE: uad
     networks:
@@ -35,7 +36,7 @@ services:
 
   web:
     container_name: web
-    image: jannisdev/uad_web:latest # Use :dev-latest for the Development Branch
+    image: jannisdev/uad_web:dev-latest # Use :dev-latest for the Development Branch
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -43,7 +44,8 @@ services:
       - db
       - server
     environment:
-      BACKEND_SERVER: server:8080
+      BACKEND_SERVER: server:8080 # Update this if you're using other Container-names
+      ORIGIN: http://localhost:3000 # Modify this to match your specific address
     networks:
       - internal
 volumes:
