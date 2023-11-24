@@ -2,6 +2,20 @@
 
 ---
 
+## Dev 1.1.3
+
+### Improvements:
+
+- Introduced additional clarification for the page delete button.
+- Revised the label for the category name input field in the content wizard; changed it from 'container' to 'category' for accuracy.
+
+### Known Bugs:
+
+- At present, deletion of links is not supported (Implementation in progress).
+- Occasionally, the Theme Switcher can behave inconsistently.
+
+---
+
 ## Dev 1.1.2
 
 We've made some UI changes. However, our model cat wasn't ready for the photoshoot, so our grumpy cat had to step in as a placeholder.
