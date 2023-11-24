@@ -2,7 +2,7 @@
   <configuration default="false" name="Dockefile" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
-        <option name="imageTag" value="jannisdev/uad_web" />
+        <option name="imageTag" value="jannisdev/uad_web:dev-latest" />
         <option name="containerName" value="" />
         <option name="sourceFilePath" value="Dockerfile" />
       </settings>
