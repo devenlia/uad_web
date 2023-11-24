@@ -125,7 +125,7 @@
 	</label>
 
 	<label class="label" for="name">
-		<span class="label-text">Give your container a <b>name</b>:</span>
+		<span class="label-text">Give your category a <b>name</b>:</span>
 	</label>
 	<input autofocus name="name" type="text" placeholder="Name" class="input input-bordered w-full" class:input-error={nameInvalid} bind:value={categoryName} />
 	<label class="label" for="name">
