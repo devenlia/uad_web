@@ -50,7 +50,7 @@
 	}
 </script>
 
-<div class="collapse bg-base-200 mb-3 w-full {item.links.length > 0 ? 'collapse-arrow' : 'collapse-close'} {editMode ? 'collapse-open' : ''}">
+<div class="collapse bg-base-200 mb-3 w-full {item.links.length > 0 ? 'collapse-open' : 'collapse-close'}">
 	<input type="checkbox" class="peer"/>
 	<div class="collapse-title text-xl font-medium flex flex-row justify-between">
 		<div class="flex flex-row items-center gap-3">
@@ -66,7 +66,7 @@
 				<button class="btn btn-sm btn-outline btn-square hover:btn-error z-50" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete /></button>
 			</div>
 		{:else}
-			<div class="z-50">
+			<div class="z-50 relative" style="right: -30px">
 				<button class="btn btn-sm btn-square" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete /></button>
 				<button class="btn btn-sm btn-square" on:click={() => editMode = !editMode}>
 					{#if editMode}
