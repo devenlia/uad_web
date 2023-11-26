@@ -6,6 +6,9 @@
 	import { openContentWizard } from '$lib/modals/contentWizard';
 
 	export let data: PageData;
+
+	$: containers = data.page.containers.sort((a, b) => a.name.localeCompare(b.name));
+	$: subpages = data.page.subpages.sort((a, b) => a.name.localeCompare(b.name));
 </script>
 
 <svelte:head>
@@ -13,9 +16,9 @@
 </svelte:head>
 
 <div class="max-h-full overflow-y-auto overflow-x-hidden" style="height: calc(100% - 20px)">
-	{#if data.page.subpages.length !== 0}
+	{#if subpages.length !== 0}
 		<div class="grid grid-cols-4 gap-3">
-			{#each data.page.subpages as subpage}
+			{#each subpages as subpage}
 				<SubpageCard {subpage} />
 			{/each}
 		</div>
@@ -24,7 +27,7 @@
 	{/if}
 
 	{#if data.page.containers.length !== 0}
-		{#each data.page.containers as container}
+		{#each containers as container}
 			<Container {container} />
 		{/each}
 	{:else}
