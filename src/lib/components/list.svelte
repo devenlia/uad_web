@@ -9,7 +9,8 @@
 	let dragDisabled = false;
 
 	function handleConsider(e : any) {
-		items = e.detail.items;
+		const {items: newItemsList} = e.detail;
+		items = newItemsList;
 	}
 
 	function handleFinalize(e : any) {
