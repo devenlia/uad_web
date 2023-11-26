@@ -25,8 +25,10 @@ export type Category = {
 
 // Equivalent to Link.java
 export type Link = {
+	name: string;
+	href: string;
+	sortIndex: number;
 	id: string;
-	url: string;
 };
 
 // Equivalent to SubPage.java
