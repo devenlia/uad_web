@@ -2,6 +2,17 @@
 
 ---
 
+## Dev Version 1.2.0
+
+### Improvements:
+
+- General UI Enhancements:
+- **Link Deletion Mode**: Introduced a new function that enables the deletion of individual links within specific categories.
+- **Link Validation**: The content wizard now automatically adds 'https://' to entered links that do not start with 'http://' or 'https://'.
+- **Implemented Sortability**: Implemented drag-and-drop functionality for links and categories, allowing them to be easily sorted, moved between categories, or transferred into different containers.
+
+---
+
 ## Dev 1.1.3
 
 ### Improvements:
