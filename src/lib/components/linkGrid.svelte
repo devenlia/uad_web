@@ -31,15 +31,16 @@
 <section class="w-full flex flex-wrap p-1 gap-3" use:dndzone={({items: itemsData, flipDurationMs: 300, type: 'link', dropTargetClasses: ['border', 'border-accent', 'rounded-btn'], dropTargetStyle: {}, centreDraggedOnCursor: true})} on:consider={handleConsider} on:finalize={handleFinalize}>
 	{#each itemsData as item (item.id)}
 		<div animate:flip={({duration: 300})} class="flex-auto min-w-max">
-			<button class="btn w-full h-full flex justify-between {editMode ? 'bg-base-300 hover:text-error' : 'btn-primary'}" on:click={() => {if (editMode) openDeleteConfirmation(() => deleteLink(item)); else window.open(item.href?.toString() ?? '/', "_blank")}}>
-				<span/>
-				{item.name}
+			<div class="w-full flex-auto flex gap-1 rounded-btn {editMode ? 'hover:outline outline-accent outline-1' : ''}">
+				<button class="btn flex-auto btn-primary h-full {editMode ? 'btn-disabled' : ''}" on:click={() => window.open(item.href?.toString() ?? '/', '_blank')}>
+					{item.name}
+				</button>
 				{#if editMode}
-					<IconParkOutlineDelete/>
-				{:else}
-					<span/>
+					<button class="btn btn-ghost h-full hover:text-error" on:click={() => openDeleteConfirmation(() => deleteLink(item))}>
+						<IconParkOutlineDelete/>
+					</button>
 				{/if}
-			</button>
+			</div>
 		</div>
 	{/each}
 </section>
