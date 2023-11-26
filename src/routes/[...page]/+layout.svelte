@@ -47,16 +47,9 @@
 			</div>
 			<div class="flex-none">
 				<button on:click={() => openContentWizard('select', data.path)} class="btn btn-square btn-ghost text-lg m-1"><IconParkOutlinePlus /></button>
-				<details class="dropdown dropdown-end">
-					<summary class="btn btn-square btn-ghost text-xl m-1"><IconParkOutlineMore /></summary>
-					<ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-						<li>
-							<div class="tooltip" data-tip={data.path === 'home' ? 'The homepage cannot be deleted.' : 'Delete the current page.'}>
-								<button on:click={() => openDeleteConfirmation(deletePage)} class={data.path === 'home' ? 'btn-disabled' : ''}><IconParkOutlineDelete /><span>Delete</span></button>
-							</div>
-						</li>
-					</ul>
-				</details>
+				<div class:tooltip={data.path === 'home'} class="tooltip tooltip-left" data-tip={data.path === 'home' ? 'The homepage cannot be deleted.' : ''}>
+					<button on:click={() => openDeleteConfirmation(deletePage)} class="btn btn-square btn-ghost text-md m-1 {data.path === 'home' ? 'btn-disabled' : 'hover:text-error'}"><IconParkOutlineDelete/></button>
+				</div>
 			</div>
 		</div>
 	</header>
