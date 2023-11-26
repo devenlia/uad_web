@@ -20,17 +20,27 @@
 
 	$: items = category.links.sort((a, b) => a.sortIndex - b.sortIndex);
 
-	const onLinkDrop = (newItems : any) => {
-		newItems.forEach(async (item : Link, index : number) => {
-			item.sortIndex = index;
+	const onLinkDrop = async (newItems: any) => {
+		for (const item of newItems) {
+			item.sortIndex = newItems.indexOf(item);
+			item.parentId = category.id
 
 			const formData = new FormData();
 			formData.append('type', 'link');
 			formData.append('object', JSON.stringify(item));
 
 			await fetch('/?/update', { method: 'POST', body: formData });
-		});
- 		items = newItems;
+		}
+
+		category.links = newItems;
+
+		const formData = new FormData();
+		formData.append('type', 'category');
+		formData.append('object', JSON.stringify(category));
+
+		await fetch('/?/update', { method: 'POST', body: formData });
+
+		items = newItems;
 	}
 </script>
 
@@ -50,7 +60,7 @@
 	</div>
 	<div class="collapse-content w-full">
 		<div class="w-full max-w-full">
-			<Grid itemsData={items} itemComponent={Link} onDrop={onLinkDrop}/>
+			<Grid itemsData={items} itemComponent={Link} type="link" onDrop={onLinkDrop}/>
 		</div>
 	</div>
 </div>
