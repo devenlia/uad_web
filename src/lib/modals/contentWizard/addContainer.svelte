@@ -81,9 +81,9 @@
 		<select name="parent" class=" mb-3 select select-bordered select-disabled w-full">
 			<option selected>{parentPage.name + ' (' + parentPage.path.replaceAll('.', ' > ') + ')'}</option>
 		</select>
-	{:then value}
-		<select name="parent" bind:value={parentPage.id} class=" mb-3 select select-bordered w-full">
-			{#each value as option}
+	{:then values}
+		<select name="parent" disabled={values.length <= 1} bind:value={parentPage.id} class=" mb-3 select select-bordered w-full">
+			{#each values as option}
 				<option value={option.id}>{option.name + ' (' + option.path.replaceAll('.', ' > ') + ')'}</option>
 			{/each}
 		</select>
