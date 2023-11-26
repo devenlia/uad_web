@@ -115,9 +115,12 @@
 			return false;
 		}
 
+		if (!href.startsWith('http://') || !href.startsWith('https://'))
+			href = 'https://' + href;
+
 		if (!validator.isURL(href)) {
 			hrefInvalid = true;
-			hrefInvalidMessage = 'Must be a valid link! (http://example.com)';
+			hrefInvalidMessage = 'Must be a valid link! (https://example.com)';
 
 			return false;
 		}
