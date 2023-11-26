@@ -5,7 +5,7 @@
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
 	import { openDeleteConfirmation } from '../modals/deleteConfirmation';
 	import { invalidateAll } from '$app/navigation';
-	import { Grid, Link } from '$lib/components';
+	import { LinkGrid } from '$lib/components';
 
 	export let category: Category;
 
@@ -60,7 +60,7 @@
 	</div>
 	<div class="collapse-content w-full">
 		<div class="w-full max-w-full">
-			<Grid itemsData={items} itemComponent={Link} type="link" onDrop={onLinkDrop}/>
+			<LinkGrid itemsData={items} onDrop={onLinkDrop}/>
 		</div>
 	</div>
 </div>
