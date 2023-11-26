@@ -15,7 +15,7 @@
 </script>
 
 <section class="w-full flex flex-wrap p-1 gap-3" use:dndzone={({items: itemsData, flipDurationMs: 300, type: 'link', dropTargetClasses: ['border', 'border-accent', 'rounded-btn'], dropTargetStyle: {}, centreDraggedOnCursor: true})} on:consider={handleConsider} on:finalize={handleFinalize}>
-	{#each itemsData as item(item['id'])}
+	{#each itemsData as item (item.id)}
 		<div animate:flip={({duration: 300})} class="flex-auto min-w-max">
 			<a target="_blank" class="btn btn-primary w-full h-full" href={item.href?.toString() ?? '/'}>{item.name}</a>
 		</div>

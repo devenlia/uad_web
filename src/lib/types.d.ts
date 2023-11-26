@@ -18,6 +18,7 @@ export type Container = {
 
 // Equivalent to Category.java
 export type Category = {
+	sortIndex: number;
 	id: string;
 	name: string;
 	links: Link[];

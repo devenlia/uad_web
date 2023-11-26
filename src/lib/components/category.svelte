@@ -3,55 +3,62 @@
 	import type { Category } from '$lib/types';
 	import { openContentWizard } from '../modals/contentWizard';
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
+	import IconParkOutlineDrag from  'virtual:icons/icon-park-outline/drag';
 	import { openDeleteConfirmation } from '../modals/deleteConfirmation';
 	import { invalidateAll } from '$app/navigation';
 	import { LinkGrid } from '$lib/components';
 
-	export let category: Category;
+	export let item: Category;
+	//export let onStartDrag : any;
 
 	const deleteCategory = async () => {
 		const formData = new FormData();
 		formData.append('type', 'category');
-		formData.append('id', category.id);
+		formData.append('id', item.id);
 
 		await fetch('/?/delete', { method: 'POST', body: formData });
 		await invalidateAll();
 	};
 
-	$: items = category.links.sort((a, b) => a.sortIndex - b.sortIndex);
+	$: items = item.links.sort((a, b) => a.sortIndex - b.sortIndex);
 
-	const onLinkDrop = async (newItems: any) => {
-		for (const item of newItems) {
-			item.sortIndex = newItems.indexOf(item);
-			item.parentId = category.id
+	const onLinkDrop = async (droppedLinks: any) => {
+		for (const link of droppedLinks) {
+			link.sortIndex = droppedLinks.indexOf(link);
+			link.parentId = item.id
 
 			const formData = new FormData();
 			formData.append('type', 'link');
-			formData.append('object', JSON.stringify(item));
+			formData.append('object', JSON.stringify(link));
 
 			await fetch('/?/update', { method: 'POST', body: formData });
 		}
 
-		category.links = newItems;
+		item.links = droppedLinks;
 
 		const formData = new FormData();
 		formData.append('type', 'category');
-		formData.append('object', JSON.stringify(category));
+		formData.append('object', JSON.stringify(item));
 
 		await fetch('/?/update', { method: 'POST', body: formData });
 
-		items = newItems;
+		items = droppedLinks;
 	}
 </script>
 
-<div class="collapse bg-base-200 mb-3 w-full {category.links.length > 0 ? 'collapse-arrow' : 'collapse-close'}">
+<div class="collapse bg-base-200 mb-3 w-full {item.links.length > 0 ? 'collapse-arrow' : 'collapse-close'}">
 	<input type="checkbox" />
 	<div class="collapse-title text-xl font-medium flex flex-row justify-between">
-		{category.name}
+		<div class="flex flex-row items-center gap-3">
+			<div class="h-min text-sm z-[50] cursor-move" ><!--on:mousedown={onStartDrag}-->
+				<IconParkOutlineDrag/>
+			</div>
+			{item.name}
+		</div>
 
-		{#if category.links.length === 0}
+		{#if item.links.length === 0}
 			<div class="flex content-center gap-x-1 relative" style="right: -30px">
-				<button class="btn btn-sm btn-outline z-50" on:click={() => openContentWizard('link', null, category.id)}>Add a link!</button>
+				<button class="btn btn-sm btn-outline z-50" on:click={() => openContentWizard('link', null, item.id)}>Add a link!</button>
 				<button class="btn btn-sm btn-outline btn-square hover:btn-error z-50" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete /></button>
 			</div>
 		{:else}

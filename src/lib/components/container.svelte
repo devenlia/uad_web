@@ -1,15 +1,13 @@
 <!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import type { Container } from '$lib/types';
-	import { Category } from '$lib/components/index';
-	import Catty from '$lib/assets/catty.svg';
+	import { Category, List } from '$lib/components/index';
 	import IconParkOutlineMore from 'virtual:icons/icon-park-outline/more-one';
 	import IconParkOutlinePlus from 'virtual:icons/icon-park-outline/plus';
 	import { openDeleteConfirmation } from '../modals/deleteConfirmation';
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
 	import { invalidateAll } from '$app/navigation';
 	import { openContentWizard } from '../modals/contentWizard';
-	import { PlaceholderCat } from '$lib/assets';
 
 	export let container: Container;
 
@@ -21,6 +19,31 @@
 		await fetch('/?/delete', { method: 'POST', body: formData });
 		await invalidateAll();
 	};
+
+	$: items = container.categories.sort((a, b) => a.sortIndex - b.sortIndex);
+
+	const onCategoryDrop = async (droppedCategories: any) => {
+		for (const category of droppedCategories) {
+			category.sortIndex = droppedCategories.indexOf(category);
+			category.parentId = container.id
+
+			const formData = new FormData();
+			formData.append('type', 'category');
+			formData.append('object', JSON.stringify(category));
+
+			await fetch('/?/update', { method: 'POST', body: formData });
+		}
+
+		container.categories = droppedCategories;
+
+		const formData = new FormData();
+		formData.append('type', 'container');
+		formData.append('object', JSON.stringify(container));
+
+		await fetch('/?/update', { method: 'POST', body: formData });
+
+		items = droppedCategories;
+	}
 </script>
 
 <div class="mt-5 border-2 border-gray-400 rounded-box w-full">
@@ -35,19 +58,7 @@
 		</details>
 	</div>
 
-	<div class="px-3 pb-3 w-full">
-		{#each container.categories as category}
-			<Category {category} />
-		{:else}
-			<div class="flex flex-row h-20 w-full justify-center content-center">
-				<div class="chat chat-end h-max">
-					<div class="chat-bubble chat-bubble-accent max-w-max flex flex-col justify-center content-center">
-						<h2 class="text-lg font-bold whitespace-nowrap w-max">Oh no, there are no categories yet!</h2>
-						<button on:click={() => openContentWizard('category', null, container.id)} class="btn btn-ghost btn-sm">Let's add one!</button>
-					</div>
-				</div>
-				<img src={PlaceholderCat} alt="Catty" />
-			</div>
-		{/each}
-	</div>
+	<List items={items} itemComponent={Category} onDrop={onCategoryDrop}>
+		<div class="text-center w-full pb-3"><button on:click={() => openContentWizard('category', null, container.id)} class="btn btn-outline btn-sm">Add a new category,</button> or drag and drop one here.</div>
+	</List>
 </div>
