@@ -18,8 +18,18 @@
 		await invalidateAll();
 	};
 
-	let items = category.links;
+	$: items = category.links.sort((a, b) => a.sortIndex - b.sortIndex);
+
 	const onLinkDrop = (newItems : any) => {
+		newItems.forEach(async (item : Link, index : number) => {
+			item.sortIndex = index;
+
+			const formData = new FormData();
+			formData.append('type', 'link');
+			formData.append('object', JSON.stringify(item));
+
+			await fetch('/?/update', { method: 'POST', body: formData });
+		});
  		items = newItems;
 	}
 </script>

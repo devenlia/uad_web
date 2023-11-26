@@ -1,6 +1,8 @@
 // Copyright (C) 2023 Jannis Machowetz
 import type { Actions } from './$types';
 import { fetchRequest, getBackendUrl } from '$lib/utils.server';
+import { data } from 'autoprefixer';
+import { throwError } from '$lib/utils';
 
 const getAddData = (data: FormData) => {
 	const type = data.get('type');
@@ -30,6 +32,13 @@ const getDeleteData = (data: FormData) => {
 	return { type, id };
 };
 
+const getUpdateDate = (data: FormData) => {
+	const type = data.get('type');
+	const object = data.get('object');
+
+	return { type, object };
+}
+
 export const actions = {
 	add: async ({ request, fetch }) => {
 		const data = getAddData(await request.formData());
@@ -43,5 +52,16 @@ export const actions = {
 
 		const url = getBackendUrl() + `/content/${data.type}/delete?id=${data.id}`;
 		return await fetchRequest(fetch, url, 'DELETE');
+	},
+
+	update: async ({ request, fetch }) => {
+		const data = getUpdateDate(await request.formData());
+
+		if (data.object == null) {
+			return
+		}
+
+		const url = getBackendUrl() + `/content/${data.type}/update`;
+		return await fetchRequest(fetch, url, 'PUT', data.object.toString());
 	}
 } satisfies Actions;
