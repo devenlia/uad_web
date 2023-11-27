@@ -1,15 +1,40 @@
 # Release Notes
 
+## Dev Version 1.2.1
+
+### Improvements:
+
+- **General UI Enhancements**:
+    - Implemented the official UAD Theme
+    - Customized the scrollbar to match the style of the new Theme
+    - Corrected some Padding settings that were not initially correct
+  
+### Bug Fixes:
+
+- Fixed a bug in the contentWizard that appended 'https://' before an incorrect link, even if it was already there
+- Added a scrolling feature to the contentWizard, which resolves the overflow issue when the screen size is too small
+- Redesigned the Theme-Switch behavior to address inconsistent actions and to initially set the theme to the system's scheme
+
+### Known Bugs:
+
+- Some peculiar visual behavior occurs when moving categories
+- The link-editing mode is not perfect
+- The scrolling appears irregular when opening the contentWizard due to the autofocusing on the name field
+- Visual assets that still have placeholder images are missing
+
 ---
 
 ## Dev Version 1.2.0
 
 ### Improvements:
 
-- General UI Enhancements:
 - **Link Deletion Mode**: Introduced a new function that enables the deletion of individual links within specific categories.
 - **Link Validation**: The content wizard now automatically adds 'https://' to entered links that do not start with 'http://' or 'https://'.
 - **Implemented Sortability**: Implemented drag-and-drop functionality for links and categories, allowing them to be easily sorted, moved between categories, or transferred into different containers.
+
+### Known Bugs:
+
+- Occasionally, the Theme Switcher still can behave inconsistently.
 
 ---
 
