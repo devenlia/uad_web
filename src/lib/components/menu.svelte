@@ -10,7 +10,20 @@
 
 	onMount(() => {
 		themeChange(false);
-		lightTheme = document.documentElement.getAttribute('data-theme') !== 'dark';
+
+		const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+		const theme = document.documentElement.getAttribute('data-theme');
+
+		if (!theme || !theme.startsWith('uad')) {
+			if (systemTheme.matches) {
+				document.documentElement.setAttribute('data-theme', 'uad_dark')
+			}
+			else {
+				document.documentElement.setAttribute('data-theme', 'uad_light')
+			}
+		}
+
+		lightTheme = document.documentElement.getAttribute('data-theme') === 'uad_light';
 	});
 </script>
 
@@ -24,7 +37,7 @@
 	<ul>
 		<li>
 			<label class="swap swap-rotate {lightTheme ? 'text-yellow-400' : 'text-purple-600'}">
-				<input id="themeCheckbox" type="checkbox" bind:checked={lightTheme} data-toggle-theme="dark,light" />
+				<input id="themeCheckbox" type="checkbox" bind:checked={lightTheme} data-toggle-theme="uad_dark,uad_light" data-act-class="ACTIVECLASS"/>
 				<span class="swap-off fill-current"><IconParkOutlineMoon /></span>
 				<span class="swap-on fill-current"><IconParkOutlineSun /></span>
 			</label>
