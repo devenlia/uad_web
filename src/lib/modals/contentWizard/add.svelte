@@ -63,8 +63,8 @@
 </script>
 
 <div class="modal" class:modal-open={visible}>
-	<div class="modal-box w-screen overflow-visible">
-		<div class="flex flex-row justify-between align-middle">
+	<div class="modal-box w-screen">
+		<div class="flex flex-row justify-between align-middle h-8">
 			<h1 class="text-lg">
 				{action === 'select'
 					? 'Select the type of content you want to add'
@@ -87,24 +87,26 @@
 		</div>
 		<div class="divider my-0" />
 
-		{#if action === 'select'}
-			{#each actions as action}
-				<button on:click={action.action} class=" w-full card hover:bg-base-200 hover:cursor-pointer hover:text-primary">
+		<div class="overflow-y-auto overflow-x-visible px-3" style="max-height: calc(100vh - 5em - 96px);">
+			{#if action === 'select'}
+				{#each actions as action}
+					<button on:click={action.action} class=" w-full card hover:bg-base-200 hover:cursor-pointer hover:text-primary">
 					<span class="w-full card-body p-4 flex-row justify-between items-center">
 						<span>{action.type}</span>
 						<IconParkOutlineRight />
 					</span>
-				</button>
-			{/each}
-		{:else if action === 'page'}
-			<AddPage />
-		{:else if action === 'container'}
-			<AddContainer />
-		{:else if action === 'category'}
-			<AddCategory />
-		{:else if action === 'link'}
-			<AddLink />
-		{/if}
+					</button>
+				{/each}
+			{:else if action === 'page'}
+				<AddPage />
+			{:else if action === 'container'}
+				<AddContainer />
+			{:else if action === 'category'}
+				<AddCategory />
+			{:else if action === 'link'}
+				<AddLink />
+			{/if}
+		</div>
 
 		<!--
     <div class="divider my-0"></div>
