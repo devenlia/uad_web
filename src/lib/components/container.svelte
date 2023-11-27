@@ -57,7 +57,9 @@
 		</div>
 	</div>
 
-	<List items={items} itemComponent={Category} onDrop={onCategoryDrop}>
-		<div class="text-center w-full pb-3"><button on:click={() => openContentWizard('category', null, container.id)} class="btn btn-outline btn-sm">Add a new category,</button> or drag and drop one here.</div>
-	</List>
+	<div class="px-3">
+		<List items={items} itemComponent={Category} onDrop={onCategoryDrop}>
+			<div class="text-center w-full pb-3"><button on:click={() => openContentWizard('category', null, container.id)} class="btn btn-outline btn-sm">Add a new category,</button> or drag and drop one here.</div>
+		</List>
+	</div>
 </div>
