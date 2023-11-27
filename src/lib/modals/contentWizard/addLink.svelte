@@ -115,10 +115,11 @@
 			return false;
 		}
 
-		if (!href.startsWith('http://') || !href.startsWith('https://'))
+		if (!href.startsWith('http://') && !href.startsWith('https://')) {
 			href = 'https://' + href;
+		}
 
-		if (!validator.isURL(href)) {
+		if (!validator.isURL(href, {require_valid_protocol: true})) {
 			hrefInvalid = true;
 			hrefInvalidMessage = 'Must be a valid link! (https://example.com)';
 
