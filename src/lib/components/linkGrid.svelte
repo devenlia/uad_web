@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import {dndzone} from 'svelte-dnd-action';
 	import {flip} from 'svelte/animate';
