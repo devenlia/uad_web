@@ -6,6 +6,7 @@
 	import IconParkOutlineDrag from  'virtual:icons/icon-park-outline/drag';
 	import IconParkOutlineEdit from  'virtual:icons/icon-park-outline/edit-two';
 	import IconParkOutlineCheck from  'virtual:icons/icon-park-outline/check';
+	import IconParkOutlinePlus from 'virtual:icons/icon-park-outline/plus';
 	import { openDeleteConfirmation } from '../modals/deleteConfirmation';
 	import { invalidateAll } from '$app/navigation';
 	import { LinkGrid } from '$lib/components';
@@ -67,14 +68,21 @@
 			</div>
 		{:else}
 			<div class="z-50 relative" style="right: -30px">
-				<button class="btn btn-sm btn-square" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete /></button>
-				<button class="btn btn-sm btn-square" on:click={() => editMode = !editMode}>
-					{#if editMode}
-						<IconParkOutlineCheck />
-					{:else}
-						<IconParkOutlineEdit />
-					{/if}
-				</button>
+				<div class="tooltip tooltip-left" data-tip="Delete this category">
+					<button class="btn btn-sm btn-square" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete /></button>
+				</div>
+				<div class="tooltip tooltip-left" data-tip="Modify the links in this category.">
+					<button class="btn btn-sm btn-square" on:click={() => editMode = !editMode}>
+						{#if editMode}
+							<IconParkOutlineCheck />
+						{:else}
+							<IconParkOutlineEdit />
+						{/if}
+					</button>
+				</div>
+				<div class="tooltip tooltip-left" data-tip="Add a link to this category">
+					<button class="btn btn-sm btn-square" on:click={() => openContentWizard('link', null, item.id)}><IconParkOutlinePlus /></button>
+				</div>
 			</div>
 		{/if}
 	</div>
