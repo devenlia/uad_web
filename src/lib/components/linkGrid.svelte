@@ -29,11 +29,11 @@
 	};
 </script>
 
-<section class="w-full flex flex-wrap p-1 gap-3" use:dndzone={({items: itemsData, flipDurationMs: 300, type: 'link', dropTargetClasses: ['border', 'border-accent', 'rounded-btn'], dropTargetStyle: {}, centreDraggedOnCursor: true})} on:consider={handleConsider} on:finalize={handleFinalize}>
+<section class="w-full flex items-stretch p-1 gap-3" use:dndzone={({items: itemsData, flipDurationMs: 300, type: 'link', dropTargetClasses: ['border', 'border-accent', 'rounded-btn'], dropTargetStyle: {}, centreDraggedOnCursor: true})} on:consider={handleConsider} on:finalize={handleFinalize}>
 	{#each itemsData as item (item.id)}
-		<div animate:flip={({duration: 300})} class="flex-auto min-w-max">
-			<div class="w-full flex-auto flex gap-1 rounded-btn {editMode ? 'hover:outline outline-accent outline-1' : ''}">
-				<button class="btn flex-auto btn-primary h-full {editMode ? 'btn-disabled' : ''}" on:click={() => window.open(item.href?.toString() ?? '/', '_blank')}>
+		<div animate:flip={({duration: 300})} class="w-full">
+			<div class="w-full flex gap-1 rounded-btn {editMode ? 'hover:outline outline-accent outline-1' : ''}">
+				<button class="flex-auto btn btn-primary h-full {editMode ? 'btn-disabled' : ''}" on:click={() => window.open(item.href?.toString() ?? '/', '_blank')}>
 					{item.name}
 				</button>
 				{#if editMode}
