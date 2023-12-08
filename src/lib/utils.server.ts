@@ -7,12 +7,11 @@ export const getBackendUrl = () => {
 	if (dev) return 'http://localhost:8080';
 	else {
 		let url = env.BACKEND_SERVER?.toLowerCase();
-		if (!url) throw new Error("Backend server not defined.")
+		if (!url) throw new Error('Backend server not defined.');
 		if (url.startsWith('https://') || url.startsWith('http://')) {
 			return url.endsWith('/') ? url.slice(0, -1) : url;
-		}
-		else {
-			url = "http://" + url;
+		} else {
+			url = 'http://' + url;
 			return url.endsWith('/') ? url.slice(0, -1) : url;
 		}
 	}
@@ -24,5 +23,5 @@ export const fetchRequest = async (fetch: any, url: string, method: HttpMethod, 
 
 	let res = await fetch(url, { headers, method, body });
 
-	return method != 'DELETE' ? await res.json() : null;
+	return method != 'DELETE' ? res : null;
 };

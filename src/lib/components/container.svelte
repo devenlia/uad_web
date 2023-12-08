@@ -4,10 +4,10 @@
 	import { Category, List } from '$lib/components/index';
 	import IconParkOutlineMore from 'virtual:icons/icon-park-outline/more-one';
 	import IconParkOutlinePlus from 'virtual:icons/icon-park-outline/plus';
-	import { openDeleteConfirmation } from '../modals/deleteConfirmation';
+	import { openDeleteConfirmation } from '$lib/modals/deletion';
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
 	import { invalidateAll } from '$app/navigation';
-	import { openContentWizard } from '../modals/contentWizard';
+	import { openContentWizard } from '$lib/modals/creation';
 
 	export let container: Container;
 
@@ -25,7 +25,7 @@
 	const onCategoryDrop = async (droppedCategories: any) => {
 		for (const category of droppedCategories) {
 			category.sortIndex = droppedCategories.indexOf(category);
-			category.parentId = container.id
+			category.parentId = container.id;
 
 			const formData = new FormData();
 			formData.append('type', 'category');
@@ -43,7 +43,7 @@
 		await fetch('/?/update', { method: 'POST', body: formData });
 
 		items = droppedCategories;
-	}
+	};
 </script>
 
 <div class="mt-5 border-2 border-gray-400 rounded-box w-full">
@@ -58,8 +58,10 @@
 	</div>
 
 	<div class="px-3">
-		<List items={items} itemComponent={Category} onDrop={onCategoryDrop}>
-			<div class="text-center w-full pb-3"><button on:click={() => openContentWizard('category', null, container.id)} class="btn btn-outline btn-sm">Add a new category,</button> or drag and drop one here.</div>
+		<List {items} itemComponent={Category} onDrop={onCategoryDrop}>
+			<div class="text-center w-full pb-3">
+				<button on:click={() => openContentWizard('category', null, container.id)} class="btn btn-outline btn-sm">Add a new category,</button> or drag and drop one here.
+			</div>
 		</List>
 	</div>
 </div>

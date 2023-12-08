@@ -4,9 +4,9 @@
 	import IconParkOutlinePlus from 'virtual:icons/icon-park-outline/plus';
 	import IconParkOutlineMore from 'virtual:icons/icon-park-outline/more-one';
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
-	import { openContentWizard } from '$lib/modals/contentWizard';
+	import { openContentWizard } from '$lib/modals/creation';
 	import { goto } from '$app/navigation';
-	import { openDeleteConfirmation } from '$lib/modals/deleteConfirmation';
+	import { openDeleteConfirmation } from '$lib/modals/deletion';
 
 	export let data: LayoutData;
 
@@ -48,7 +48,9 @@
 			<div class="flex-none">
 				<button on:click={() => openContentWizard('select', data.path)} class="btn btn-square btn-ghost text-lg m-1"><IconParkOutlinePlus /></button>
 				<div class:tooltip={data.path === 'home'} class="tooltip tooltip-left" data-tip={data.path === 'home' ? 'The homepage cannot be deleted.' : ''}>
-					<button on:click={() => openDeleteConfirmation(deletePage)} class="btn btn-square btn-ghost text-md m-1 {data.path === 'home' ? 'btn-disabled' : 'hover:text-error'}"><IconParkOutlineDelete/></button>
+					<button on:click={() => openDeleteConfirmation(deletePage)} class="btn btn-square btn-ghost text-md m-1 {data.path === 'home' ? 'btn-disabled' : 'hover:text-error'}"
+						><IconParkOutlineDelete /></button
+					>
 				</div>
 			</div>
 		</div>

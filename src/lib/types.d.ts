@@ -11,6 +11,7 @@ export type Page = {
 
 // Equivalent to Container.java
 export type Container = {
+	parentId: string;
 	id: string;
 	name: string;
 	categories: Category[];
@@ -18,6 +19,7 @@ export type Container = {
 
 // Equivalent to Category.java
 export type Category = {
+	parentId: string;
 	sortIndex: number;
 	id: string;
 	name: string;
@@ -26,6 +28,7 @@ export type Category = {
 
 // Equivalent to Link.java
 export type Link = {
+	parentId: string;
 	name: string;
 	href: string;
 	sortIndex: number;

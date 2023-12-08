@@ -8,7 +8,7 @@ services:
     image: mongo:latest
     restart: unless-stopped
     ports:
-      - "27017:27017"
+      - '27017:27017'
     environment:
       MONGO_INITDB_ROOT_USERNAME: uad_access # Modify this if necessary
       MONGO_INITDB_ROOT_PASSWORD: password123 # Modify this
@@ -39,7 +39,7 @@ services:
     image: jannisdev/uad_web:latest # Use :dev-latest for the Development Branch
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       - db
       - server

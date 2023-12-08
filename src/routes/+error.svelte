@@ -33,7 +33,7 @@
 	{#if $page.status === 404}
 		<div class="flex flex-col items-center justify-center mt-20 overflow-y-auto">
 			<h1 class="text-6xl text-center">Oops!</h1>
-			<div class="max-w-md m-5"><img width="200px" src="{PlaceholderCat}" alt="Placeholder Cat"></div>
+			<div class="max-w-md m-5"><img width="200px" src={PlaceholderCat} alt="Placeholder Cat" /></div>
 			<p class="text-center text-3xl">I was unable to locate the page '{pageName}' you were searching for.</p>
 			<p class="text-center text-3xl">Perhaps it was typed incorrectly?</p>
 		</div>
@@ -41,7 +41,7 @@
 		<div class="flex flex-col items-center justify-center mt-20 overflow-y-auto">
 			<h1 class="text-6xl text-center">OH NO!</h1>
 			<!--<div class="max-w-md m-5">{@html Catty}</div>-->
-			<div class="max-w-md m-5"><img width="200px" src="{PlaceholderCat}" alt="Placeholder Cat"></div>
+			<div class="max-w-md m-5"><img width="200px" src={PlaceholderCat} alt="Placeholder Cat" /></div>
 			<p class="text-center text-3xl">My application ... its broken.</p>
 		</div>
 	{/if}

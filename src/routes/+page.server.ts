@@ -37,31 +37,40 @@ const getUpdateDate = (data: FormData) => {
 	const object = data.get('object');
 
 	return { type, object };
-}
+};
+
+const handleReturn = async (response: Response) => {
+	if (response.status != 200) return { status: response.status, message: await response.text() };
+	else return { status: response.status, message: await response.json() };
+};
 
 export const actions = {
 	add: async ({ request, fetch }) => {
 		const data = getAddData(await request.formData());
 
 		const url = getBackendUrl() + `/content/${data.type}/add`;
-		return await fetchRequest(fetch, url, 'POST', data.body);
+
+		let res = await fetchRequest(fetch, url, 'POST', data.body);
+		return handleReturn(res);
 	},
 
 	delete: async ({ request, fetch }) => {
 		const data = getDeleteData(await request.formData());
 
 		const url = getBackendUrl() + `/content/${data.type}/delete?id=${data.id}`;
-		return await fetchRequest(fetch, url, 'DELETE');
+		let res = await fetchRequest(fetch, url, 'DELETE');
+		return handleReturn(res);
 	},
 
 	update: async ({ request, fetch }) => {
 		const data = getUpdateDate(await request.formData());
 
 		if (data.object == null) {
-			return
+			return;
 		}
 
 		const url = getBackendUrl() + `/content/${data.type}/update`;
-		return await fetchRequest(fetch, url, 'PUT', data.object.toString());
+		let res = await fetchRequest(fetch, url, 'PUT', data.object.toString());
+		return handleReturn(res);
 	}
 } satisfies Actions;

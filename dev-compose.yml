@@ -6,7 +6,7 @@ services:
     image: mongo:latest
     container_name: db
     ports:
-      - "27017:27017"
+      - '27017:27017'
     networks:
       - uad_network
   backend:
@@ -17,7 +17,7 @@ services:
       MONGO_SERVER: db:27017
       MONGO_DATABASE: uad
     ports:
-      - "8080:8080"
+      - '8080:8080'
     depends_on:
       - db
     networks:

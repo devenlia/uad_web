@@ -3,7 +3,7 @@
 	import type { PageData } from './$types';
 	import { SubpageCard, Container } from '$lib/components';
 	import { Desert, PlaceholderCat, SadCat } from '$lib/assets';
-	import { openContentWizard } from '$lib/modals/contentWizard';
+	import { openContentWizard } from '$lib/modals/creation';
 
 	export let data: PageData;
 
@@ -32,15 +32,15 @@
 		{/each}
 	{:else}
 		<div class="h-full w-full flex justify-center items-center">
-			{#if data.page.path === "home"}
+			{#if data.page.path === 'home'}
 				<div class="h-min flex flex-row items-center z-auto relative">
 					<div class="w-max">
-						<h1 class="text-7xl">Welcome to <br/> UAD</h1>
+						<h1 class="text-7xl">Welcome to <br /> UAD</h1>
 						<p class="text-xl mb-10">Your new Unified Application Directory</p>
 
 						<button on:click={() => openContentWizard('container', null, data.page.id, true)} class="btn btn-outline">Start to add your first container!</button>
 						<div class="tooltip" data-tip="Not yet implemented.">
-							<button on:click={() => {}} class="btn btn-primary btn-disabled" >Take a tour.</button>
+							<button on:click={() => {}} class="btn btn-primary btn-disabled">Take a tour.</button>
 						</div>
 					</div>
 
@@ -48,10 +48,9 @@
 						<img height="200px" width="200px" src={PlaceholderCat} alt="SadCat" />
 					</div>
 				</div>
-			{:else }
-				<img src="{Desert}" alt="desert">
+			{:else}
+				<img src={Desert} alt="desert" />
 			{/if}
 		</div>
 	{/if}
 </div>
-

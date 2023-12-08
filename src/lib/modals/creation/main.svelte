@@ -3,12 +3,9 @@
 	import IconParkOutlineRight from 'virtual:icons/icon-park-outline/right';
 	import IconParkOutlineClose from 'virtual:icons/icon-park-outline/close';
 	import { Visible, Action, Tutorial } from './store';
-	import AddPage from './addPage.svelte';
-	import AddContainer from './addContainer.svelte';
-	import AddCategory from './addCategory.svelte';
-	import AddLink from './addLink.svelte';
+	import { PageCreation, ContainerCreation, CategoryCreation, LinkCreation } from './components';
 	import { onMount } from 'svelte';
-	import { closeContentWizard } from '$lib/modals/contentWizard/index';
+	import { closeContentWizard } from './';
 
 	let visible: boolean;
 	Visible.subscribe((v) => {
@@ -91,20 +88,20 @@
 			{#if action === 'select'}
 				{#each actions as action}
 					<button on:click={action.action} class=" w-full card hover:bg-base-200 hover:cursor-pointer hover:text-primary">
-					<span class="w-full card-body p-4 flex-row justify-between items-center">
-						<span>{action.type}</span>
-						<IconParkOutlineRight />
-					</span>
+						<span class="w-full card-body p-4 flex-row justify-between items-center">
+							<span>{action.type}</span>
+							<IconParkOutlineRight />
+						</span>
 					</button>
 				{/each}
 			{:else if action === 'page'}
-				<AddPage />
+				<PageCreation />
 			{:else if action === 'container'}
-				<AddContainer />
+				<ContainerCreation />
 			{:else if action === 'category'}
-				<AddCategory />
+				<CategoryCreation />
 			{:else if action === 'link'}
-				<AddLink />
+				<LinkCreation />
 			{/if}
 		</div>
 

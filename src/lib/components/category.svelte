@@ -1,19 +1,19 @@
 <!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import type { Category } from '$lib/types';
-	import { openContentWizard } from '../modals/contentWizard';
+	import { openContentWizard } from '../modals/creation';
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
-	import IconParkOutlineDrag from  'virtual:icons/icon-park-outline/drag';
-	import IconParkOutlineEdit from  'virtual:icons/icon-park-outline/edit-two';
-	import IconParkOutlineCheck from  'virtual:icons/icon-park-outline/check';
+	import IconParkOutlineDrag from 'virtual:icons/icon-park-outline/drag';
+	import IconParkOutlineEdit from 'virtual:icons/icon-park-outline/edit-two';
+	import IconParkOutlineCheck from 'virtual:icons/icon-park-outline/check';
 	import IconParkOutlinePlus from 'virtual:icons/icon-park-outline/plus';
-	import { openDeleteConfirmation } from '../modals/deleteConfirmation';
+	import { openDeleteConfirmation } from '../modals/deletion';
 	import { invalidateAll } from '$app/navigation';
 	import { LinkGrid } from '$lib/components';
 
 	export let item: Category;
 
-	let editMode : boolean
+	let editMode: boolean;
 
 	const deleteCategory = async () => {
 		const formData = new FormData();
@@ -25,12 +25,12 @@
 	};
 
 	$: items = item.links.sort((a, b) => a.sortIndex - b.sortIndex);
-	$: editMode = items.length == 0 ? false : editMode
+	$: editMode = items.length == 0 ? false : editMode;
 
 	const onLinkDrop = async (droppedLinks: any) => {
 		for (const link of droppedLinks) {
 			link.sortIndex = droppedLinks.indexOf(link);
-			link.parentId = item.id
+			link.parentId = item.id;
 
 			const formData = new FormData();
 			formData.append('type', 'link');
@@ -48,15 +48,16 @@
 		await fetch('/?/update', { method: 'POST', body: formData });
 
 		items = droppedLinks;
-	}
+	};
 </script>
 
 <div class="collapse bg-base-200 mb-3 w-full {item.links.length > 0 ? 'collapse-open' : 'collapse-close'}">
-	<input type="checkbox" class="peer"/>
+	<input type="checkbox" class="peer" />
 	<div class="collapse-title text-xl font-medium flex flex-row justify-between">
 		<div class="flex flex-row items-center gap-3">
-			<div class="h-min text-sm z-[50] cursor-move" ><!--on:mousedown={onStartDrag}-->
-				<IconParkOutlineDrag/>
+			<div class="h-min text-sm z-[50] cursor-move">
+				<!--on:mousedown={onStartDrag}-->
+				<IconParkOutlineDrag />
 			</div>
 			{item.name}
 		</div>
@@ -72,7 +73,7 @@
 					<button class="btn btn-sm btn-square" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete /></button>
 				</div>
 				<div class="tooltip tooltip-left" data-tip="Modify the links in this category.">
-					<button class="btn btn-sm btn-square" on:click={() => editMode = !editMode}>
+					<button class="btn btn-sm btn-square" on:click={() => (editMode = !editMode)}>
 						{#if editMode}
 							<IconParkOutlineCheck />
 						{:else}
@@ -88,7 +89,7 @@
 	</div>
 	<div class="collapse-content w-full">
 		<div class="w-full max-w-full">
-			<LinkGrid itemsData={items} onDrop={onLinkDrop} {editMode}/>
+			<LinkGrid itemsData={items} onDrop={onLinkDrop} {editMode} />
 		</div>
 	</div>
 </div>

@@ -1,9 +1,9 @@
 <!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import '../app.css';
-	import { Menu } from '$lib/components/index';
-	import ContentWizard from '$lib/modals/contentWizard';
-	import DeleteConfirmation from '$lib/modals/deleteConfirmation';
+	import { Menu } from '$lib/components/';
+	import ContentWizard from '$lib/modals/creation';
+	import DeleteConfirmation from '$lib/modals/deletion';
 	import { closeToast, Toasts } from '$lib/stores/toastStore';
 	import IconParkOutlineClose from 'virtual:icons/icon-park-outline/close';
 
@@ -18,7 +18,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-	<link rel="icon" href="/favicon.png" />
+	<link rel="icon" href="/favicon.ico" />
 </svelte:head>
 
 <div class="flex flex-row p-3 h-full overflow-hidden font-default gap-3">
