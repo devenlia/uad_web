@@ -46,11 +46,22 @@
 				</div>
 			</div>
 			<div class="flex-none">
-				<button on:click={() => openContentWizard('select', data.path)} class="btn btn-square btn-ghost text-lg m-1"><IconParkOutlinePlus /></button>
-				<div class:tooltip={data.path === 'home'} class="tooltip tooltip-left" data-tip={data.path === 'home' ? 'The homepage cannot be deleted.' : ''}>
-					<button on:click={() => openDeleteConfirmation(deletePage)} class="btn btn-square btn-ghost text-md m-1 {data.path === 'home' ? 'btn-disabled' : 'hover:text-error'}"
-						><IconParkOutlineDelete /></button
-					>
+				<div class="dropdown dropdown-left">
+					<div tabindex="0" role="button" class="btn m-1 text-lg"><IconParkOutlineMore/></div>
+					<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-max">
+						<li>
+							<button on:click={() => openContentWizard('select', data.path)}>
+								<IconParkOutlinePlus />
+								<span>Open Content Wizard</span>
+							</button>
+						</li>
+						<li class:tooltip={data.path === 'home'} class="w-full tooltip {data.path === 'home' ? 'disabled' : 'hover:text-error'}" data-tip={data.path === 'home' ? 'The homepage cannot be deleted.' : ''}>
+							<button on:click={() => openDeleteConfirmation(deletePage)} class="w-full">
+								<IconParkOutlineDelete />
+								<span>Delete this page</span>
+							</button>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

@@ -3,9 +3,8 @@
 	import { dndzone } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
 	import { Link } from '.'
-	import type { Link } from '$lib/types';
 
-	export let itemsData: Array<Link>;
+	export let itemsData: Array<any>;
 	export let onDrop: any;
 	export let editMode: boolean;
 

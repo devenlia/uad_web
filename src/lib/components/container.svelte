@@ -49,11 +49,22 @@
 <div class="mt-5 border-2 border-gray-400 rounded-box w-full">
 	<div class="text-2xl bg-base-100 relative w-max px-3 py-1 rounded-box flex flex-row group" style="top: -20px; left: 20px">
 		<h1>{container.name}</h1>
-		<div class="tooltip tooltip-bottom" data-tip="Add a new category">
-			<button class="ml-2 btn btn-square btn-ghost btn-sm text-lg" on:click={() => openContentWizard('category', null, container.id)}><IconParkOutlinePlus /></button>
-		</div>
-		<div class="tooltip tooltip-bottom" data-tip="Delete this container">
-			<button class="ml-1 btn btn-square btn-ghost btn-sm hover:text-error" on:click={() => openDeleteConfirmation(deleteContainer)}><IconParkOutlineDelete /></button>
+		<div class="dropdown dropdown-right">
+			<div tabindex="0" role="button" class="ml-2 btn btn-square btn-ghost btn-sm text-lg"><IconParkOutlineMore/></div>
+			<ul tabindex="0" class="dropdown-content z-[10] menu p-2 shadow bg-base-300 rounded-box w-max">
+				<li>
+					<button on:click={() => openContentWizard('category', null, container.id)}>
+						<IconParkOutlinePlus />
+						<span>Add a new category</span>
+					</button>
+				</li>
+				<li>
+					<button on:click={() => openDeleteConfirmation(deleteContainer)}>
+						<IconParkOutlineDelete />
+						<span>Delete this container</span>
+					</button>
+				</li>
+			</ul>
 		</div>
 	</div>
 

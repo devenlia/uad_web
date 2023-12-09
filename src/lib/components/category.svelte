@@ -10,6 +10,7 @@
 	import { openDeleteConfirmation } from '../modals/deletion';
 	import { invalidateAll } from '$app/navigation';
 	import { LinkGrid } from '$lib/components';
+	import IconParkOutlineMore from 'virtual:icons/icon-park-outline/more-one';
 
 	export let item: Category;
 
@@ -55,7 +56,7 @@
 	<input type="checkbox" class="peer" />
 	<div class="collapse-title text-xl font-medium flex flex-row justify-between">
 		<div class="flex flex-row items-center gap-3">
-			<div class="h-min text-sm z-[50] cursor-move">
+			<div class="h-min text-sm z-[1] cursor-move">
 				<!--on:mousedown={onStartDrag}-->
 				<IconParkOutlineDrag />
 			</div>
@@ -69,21 +70,37 @@
 			</div>
 		{:else}
 			<div class="z-50 relative" style="right: -30px">
-				<div class="tooltip tooltip-left" data-tip="Delete this category">
-					<button class="btn btn-sm btn-square" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete /></button>
-				</div>
-				<div class="tooltip tooltip-left" data-tip="Modify the links in this category.">
-					<button class="btn btn-sm btn-square" on:click={() => (editMode = !editMode)}>
-						{#if editMode}
+				{#if editMode}
+					<div class="tooltip tooltip-left" data-tip="Apply">
+						<button class="btn btn-sm btn-square" on:click={() => (editMode = false)}>
 							<IconParkOutlineCheck />
-						{:else}
-							<IconParkOutlineEdit />
-						{/if}
-					</button>
-				</div>
-				<div class="tooltip tooltip-left" data-tip="Add a link to this category">
-					<button class="btn btn-sm btn-square" on:click={() => openContentWizard('link', null, item.id)}><IconParkOutlinePlus /></button>
-				</div>
+						</button>
+					</div>
+				{:else}
+					<div class="dropdown dropdown-left">
+						<div tabindex="0" role="button" class="btn btn-sm btn-square btn-ghost text-lg"><IconParkOutlineMore/></div>
+						<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-max">
+							<li>
+								<button on:click={() => openContentWizard('link', null, item.id)}>
+									<IconParkOutlinePlus />
+									<span>Add a link to this category</span>
+								</button>
+							</li>
+							<li>
+								<button on:click={() => (editMode = true)}>
+									<IconParkOutlineEdit />
+									<span>Enable Link Edit Mode</span>
+								</button>
+							</li>
+							<li>
+								<button on:click={() => openDeleteConfirmation(deleteCategory)}>
+									<IconParkOutlineDelete />
+									<span>Delete this container</span>
+								</button>
+							</li>
+						</ul>
+					</div>
+				{/if}
 			</div>
 		{/if}
 	</div>
