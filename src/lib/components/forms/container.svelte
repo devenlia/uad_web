@@ -1,7 +1,6 @@
 <!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import { closeContentWizard } from '$lib/modals/creation/index.js';
-	import { Action, Visible } from '$lib/modals/creation/store.js';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import type { Page } from '$lib/types.js';
 	import { ActionButtons, Input, Select } from '$lib/components/forms/elements';
@@ -32,7 +31,7 @@
 	};
 
 	const handleKeyDown = (event: KeyboardEvent) => {
-		if ($Visible && $Action == 'container' && event.key === 'Enter') {
+		if (event.key === 'Enter') {
 			proceed();
 		}
 	};

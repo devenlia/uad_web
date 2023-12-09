@@ -1,9 +1,6 @@
 <!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
-	// TODO: Specify Icon and color on Link creation
-
 	import { closeContentWizard } from '$lib/modals/creation/index.js';
-	import { Action, Visible } from '$lib/modals/creation/store.js';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import type { Category, Container, Page } from '$lib/types';
 	import { ActionButtons, Input, Select } from '$lib/components/forms/elements';
@@ -58,7 +55,7 @@
 	};
 
 	const handleKeyDown = (event: KeyboardEvent) => {
-		if ($Visible && $Action == 'link' && event.key === 'Enter') {
+		if (event.key === 'Enter') {
 			proceed();
 		}
 	};

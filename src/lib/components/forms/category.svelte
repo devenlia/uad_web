@@ -1,9 +1,8 @@
 <!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import { closeContentWizard } from '$lib/modals/creation/index.js';
-	import { Action, Visible } from '$lib/modals/creation/store.js';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import type { Category, Container, Page } from '$lib/types';
+	import type { Container, Page } from '$lib/types';
 	import { ActionButtons, Input, Select } from '$lib/components/forms/elements';
 
 	export let possiblePages: Promise<Array<Page> | null> | null;
@@ -42,7 +41,7 @@
 	};
 
 	const handleKeyDown = (event: KeyboardEvent) => {
-		if ($Visible && $Action == 'category' && event.key === 'Enter') {
+		if (event.key === 'Enter') {
 			proceed();
 		}
 	};
