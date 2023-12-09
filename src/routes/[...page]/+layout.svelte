@@ -47,7 +47,7 @@
 			</div>
 			<div class="flex-none">
 				<div class="dropdown dropdown-left">
-					<div tabindex="0" role="button" class="btn m-1 text-lg"><IconParkOutlineMore/></div>
+					<div tabindex="0" role="button" class="btn btn-square btn-ghost m-1 text-lg"><IconParkOutlineMore/></div>
 					<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-max">
 						<li>
 							<button on:click={() => openContentWizard('select', data.path)}>

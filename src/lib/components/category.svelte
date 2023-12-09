@@ -79,7 +79,7 @@
 				{:else}
 					<div class="dropdown dropdown-left">
 						<div tabindex="0" role="button" class="btn btn-sm btn-square btn-ghost text-lg"><IconParkOutlineMore/></div>
-						<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-max">
+						<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-max" style="top: -5px">
 							<li>
 								<button on:click={() => openContentWizard('link', null, item.id)}>
 									<IconParkOutlinePlus />
