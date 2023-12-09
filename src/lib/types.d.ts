@@ -40,3 +40,5 @@ export type SubPage = {
 	id: string;
 	name: string;
 };
+
+export type RGB = [number, number, number];

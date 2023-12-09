@@ -5,5 +5,6 @@ import container from './container.svelte';
 import category from './category.svelte';
 import linkGrid from './linkGrid.svelte';
 import list from './list.svelte';
+import Link from './link.svelte'
 
-export { menu as Menu, subpageCard as SubpageCard, container as Container, category as Category, linkGrid as LinkGrid, list as List };
+export { menu as Menu, subpageCard as SubpageCard, container as Container, category as Category, linkGrid as LinkGrid, list as List, Link };
