@@ -1,8 +1,7 @@
 // Copyright (C) 2023 Jannis Machowetz
 import { Visible, Action, Parent, reset, Tutorial } from './store';
-import { addToast } from '$lib/stores/toastStore';
 import CreationModal from './main.svelte';
-import { loadParent, loadParentByPath, throwError } from '$lib/utils';
+import { loadParent, loadParentByPath } from '$lib/utils';
 
 export default CreationModal;
 
