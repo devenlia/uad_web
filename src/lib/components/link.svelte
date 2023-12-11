@@ -22,7 +22,7 @@
 	}
 
 	onMount(async () => {
-		let res = await fetch(`/get?type=favicon&path=${link.href}`)
+		let res = await fetch(`/get/favicon?url=${link.href}`)
 
 		if (res.status == 200) {
 			let data = await res.json();
