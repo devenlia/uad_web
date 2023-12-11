@@ -5,6 +5,7 @@ import { JSDOM } from 'jsdom';
 import ColorThief from 'pure-color-thief-node'
 import icoToPng from 'ico-to-png';
 import type { RGB } from '$lib/types';
+import * as url from 'url';
 
 const getData = (params: URLSearchParams) => {
 	const type = params.get('type');
@@ -20,16 +21,14 @@ const fetchFavicon = async (fetch : any, rawUrl: string) => {
 		if (formattedUrl.port)
 			url = url + ':' + formattedUrl.port
 
-		// Try to fetch the favicon at `${url}/favicon.ico` first
 		let iconResponse = await fetch(`${url}/favicon.ico`);
 		let iconBuffer;
+		let contentType;
 
-		// If the response is ok, the favicon exists at the expected url
-		if (iconResponse.ok) {
-			const iconText = await iconResponse.arrayBuffer();
-			iconBuffer = Buffer.from(iconText);
+		if (iconResponse.ok && iconResponse.headers.get('Content-Type').includes('image')) {
+			contentType = iconResponse.headers.get('Content-Type')
+			iconBuffer = Buffer.from(await iconResponse.arrayBuffer());
 		} else {
-			// If the response was not ok, fetch the html and look for the favicon url
 			const pageResponse = await fetch(url);
 			const html = await pageResponse.text();
 			const dom = new JSDOM(html).window.document;
@@ -39,22 +38,34 @@ const fetchFavicon = async (fetch : any, rawUrl: string) => {
 				const iconUrl = new URL(iconLink.getAttribute('href') as string, url);
 				iconResponse = await fetch(iconUrl);
 
-				const iconText = await iconResponse.arrayBuffer();
-				iconBuffer = Buffer.from(iconText);
+				contentType = iconResponse.headers.get('Content-Type')
+				iconBuffer = Buffer.from(await iconResponse.arrayBuffer());
 			} else {
 				return { favicon: "none", color: "none"};
 			}
 		}
+		let icon;
+
+		switch (contentType) {
+			case 'image/x-icon':
+				icon = await icoToPng(iconBuffer, 128)
+				break
+			case 'image/png':
+				icon = iconBuffer
+				break
+			default:
+				throw Error("Unsupported image format")
+		}
 
 		const colorThief = new ColorThief();
-		await colorThief.loadImage(await icoToPng(iconBuffer, 128), 'image/png')
+		await colorThief.loadImage(icon, 'image/png')
 		const color : RGB = colorThief.getColorPalette(5)[0]
 
 		const faviconBase64 = iconBuffer.toString('base64');
 
 		return { favicon: faviconBase64, color};
 	} catch (err) {
-		console.error('An error occurred:', err);
+		console.error(`An error occurred: \n ${rawUrl} \n`, err);
 	}
 }
 
