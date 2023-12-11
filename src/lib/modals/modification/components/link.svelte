@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import { LinkForm } from '$lib/components/forms';
 	import type {  Link } from '$lib/types';

@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import { JSDOM } from 'jsdom';
 import icoToPng from 'ico-to-png';
 import ColorThief from 'pure-color-thief-node';

@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Jannis Machowetz
 import { Visible } from './store';
 import { fetchData, loadParent, throwError } from '$lib/utils';
 import type { Category, Container, Link, Page } from '$lib/types';

@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import { PageForm } from '$lib/components/forms';
 	import { closeContentWizard } from '$lib/modals/creation';

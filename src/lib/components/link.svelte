@@ -1,3 +1,4 @@
+<!-- Copyright (C) 2023 Jannis Machowetz -->
 <script lang="ts">
 	import { openDeleteConfirmation } from '$lib/modals/deletion/index.js';
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
