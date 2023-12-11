@@ -3,6 +3,7 @@
 	import '../app.css';
 	import { Menu } from '$lib/components/';
 	import ContentWizard from '$lib/modals/creation';
+	import ModificationModal from '$lib/modals/modification';
 	import DeleteConfirmation from '$lib/modals/deletion';
 	import { closeToast, Toasts } from '$lib/stores/toastStore';
 	import IconParkOutlineClose from 'virtual:icons/icon-park-outline/close';
@@ -29,6 +30,7 @@
 <!-- Modals -->
 <ContentWizard />
 <DeleteConfirmation />
+<ModificationModal />
 
 <!-- Toasts -->
 {#if toasts?.length >= 1}

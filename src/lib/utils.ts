@@ -1,6 +1,8 @@
 // Copyright (C) 2023 Jannis Machowetz
 import { addToast } from '$lib/stores/toastStore';
 import { closeContentWizard } from '$lib/modals/creation';
+import type { Category, Container, Page } from '$lib/types';
+import { closeModificationModal } from '$lib/modals/modification';
 
 export const throwError = (status: number, text: string) => {
 	addToast({ id: '', priority: 2, message: `An error occurred. Please check the console for detailed information.` });
@@ -14,13 +16,13 @@ export const loadParent = async (parentId: string, type: string) => {
 		case 'container':
 			return { page: await fetchData(`/get?type=page&id=${parentId}`), container: null, category: null };
 		case 'category':
-			let catParentCont = await fetchData(`/get?type=container&id=${parentId}`);
-			let catParentPage = await fetchData(`/get?type=page&id=${catParentCont.parentId}`);
+			let catParentCont : Container = await fetchData(`/get?type=container&id=${parentId}`);
+			let catParentPage : Page = await fetchData(`/get?type=page&id=${catParentCont.parentId}`);
 			return { page: catParentPage, container: catParentCont, category: null };
 		case 'link':
-			let parentCat = await fetchData(`/get?type=category&id=${parentId}`);
-			let parentCont = await fetchData(`/get?type=container&id=${parentCat.parentId}`);
-			let parentPage = await fetchData(`/get?type=page&id=${parentCont.parentId}`);
+			let parentCat : Category = await fetchData(`/get?type=category&id=${parentId}`);
+			let parentCont : Container = await fetchData(`/get?type=container&id=${parentCat.parentId}`);
+			let parentPage : Page = await fetchData(`/get?type=page&id=${parentCont.parentId}`);
 			return { page: parentPage, container: parentCont, category: parentCat };
 		default:
 			return loadParentByPath('home');
@@ -44,7 +46,7 @@ export const fetchData = async (url: string) => {
 
 	if (res.status != 200) {
 		await closeContentWizard()
-		// TODO: Close Mod modal
+		await closeModificationModal()
 		throwError(res.status, await res.text());
 		return;
 	}

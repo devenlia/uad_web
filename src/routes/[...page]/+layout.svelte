@@ -7,6 +7,8 @@
 	import { openContentWizard } from '$lib/modals/creation';
 	import { goto } from '$app/navigation';
 	import { openDeleteConfirmation } from '$lib/modals/deletion';
+	import IconParkOutlineEdit from 'virtual:icons/icon-park-outline/edit-one';
+	import { openModificationModal } from '$lib/modals/modification';
 
 	export let data: LayoutData;
 
@@ -53,6 +55,12 @@
 							<button on:click={() => openContentWizard('select', data.path)}>
 								<IconParkOutlinePlus />
 								<span>Open Content Wizard</span>
+							</button>
+						</li>
+						<li class:tooltip={data.path === 'home'} class="w-full tooltip {data.path === 'home' ? 'disabled' : 'hover:text-error'}" data-tip={data.path === 'home' ? 'The homepage cannot be edited.' : ''}>
+							<button on:click={() => openModificationModal('page', null, null, data.path)}>
+								<IconParkOutlineEdit />
+								<span>Edit this page</span>
 							</button>
 						</li>
 						<li class:tooltip={data.path === 'home'} class="w-full tooltip {data.path === 'home' ? 'disabled' : 'hover:text-error'}" data-tip={data.path === 'home' ? 'The homepage cannot be deleted.' : ''}>

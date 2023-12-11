@@ -3,6 +3,7 @@
 // Equivalent to Page.java
 export type Page = {
 	id: string;
+	parentId: string
 	path: string;
 	name: string;
 	containers: Container[];

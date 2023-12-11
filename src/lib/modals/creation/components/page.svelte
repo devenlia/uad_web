@@ -7,20 +7,7 @@
 	import type { Page } from '$lib/types';
 	import { Parent } from '$lib/modals/creation/store';
 
-	const loadParents = async (): Promise<Array<Page> | null> => {
-		let res: Response = await fetch(`/get?type=list`);
 
-		if (res.status != 200) {
-			await closeContentWizard();
-			throwError(res.status, await res.text());
-			return null;
-		}
-
-		let pages = await res.json();
-		preselectedParent = pages.find((obj: any) => obj.id === (preselectedParent ? preselectedParent.id : '0'));
-
-		return pages;
-	};
 
 	const addPage = async (page: Page) => {
 		const formData = new FormData();
@@ -34,7 +21,7 @@
 		await closeContentWizard();
 	};
 
-	let preselectedParent: Page = $Parent.page ?? { id: '0', name: 'Home', path: 'home', containers: [], subpages: [] };
+	let preselectedParent: Page = $Parent.page;
 </script>
 
-<PageForm on:proceed={(e) => addPage(e.detail.page)} possibleParents={loadParents()} bind:selectedParent={preselectedParent} />
+<PageForm on:proceed={(e) => addPage(e.detail.page)} on:abort={closeContentWizard} selectedParent={preselectedParent} />
