@@ -7,24 +7,25 @@
 	import { closeModificationModal, Parent } from '$lib/modals/modification';
 	import { goto, invalidateAll } from '$app/navigation';
 
-	export let Page : Page;
+	export let Page : Page | Container | Category | Link | null;
+	const page = Page as Page
 
-	const updatePage = async (page: Page) => {
-		page.id = Page!.id
-		page.containers = Page!.containers;
-		page.subpages = Page!.subpages;
+	const updatePage = async (updatedPage: Page) => {
+		updatedPage.id = page.id
+		updatedPage.containers = page.containers;
+		updatedPage.subpages = page.subpages;
 
 		const formData = new FormData();
 		formData.append('type', 'page');
-		formData.append('object', JSON.stringify(page));
+		formData.append('object', JSON.stringify(updatedPage));
 
 		await fetch('/?/update', { method: 'POST', body: formData });
 
-		await goto('/' + page.path.replaceAll('.', '/'));
+		await goto('/' + updatedPage.path.replaceAll('.', '/'));
 		await closeModificationModal();
 	};
 
 	let preselectedParent = Parent?.page ?? null;
 </script>
 
-<PageForm on:proceed={(e) => updatePage(e.detail.page)} on:abort={closeModificationModal} selectedParent={preselectedParent} page={Page}/>
+<PageForm on:proceed={(e) => updatePage(e.detail.page)} on:abort={closeModificationModal} selectedParent={preselectedParent} page={page}/>
