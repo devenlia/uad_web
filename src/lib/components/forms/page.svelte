@@ -144,7 +144,7 @@
 		{/if}
 	{/await}
 
-	<Input bind:ref bind:value={pageName} name="name" placeholder="My new page name" labels={nameLabels} invalid={nameInvalid.true} />
+	<Input bind:ref bind:value={pageName} name="name" placeholder="Nathaneal Down" labels={nameLabels} invalid={nameInvalid.true} />
 
 	<ActionButtons proceedText="Save" abortText="Discard" on:proceed={proceed} on:abort={abort} />
 </div>

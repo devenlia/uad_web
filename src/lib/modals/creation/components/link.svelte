@@ -10,22 +10,7 @@
 	import { CategoryForm, LinkForm } from '$lib/components/forms';
 	import type { Link } from '$lib/types';
 
-	async function loadParents() {
-		let res: Response = await fetch(`/get?type=list`);
 
-		if (res.status != 200) {
-			await closeContentWizard();
-			throwError(res.status, await res.text());
-			return null;
-		}
-
-		let pages = await res.json();
-		preselectedParent = pages.find((obj: any) => obj.id === preselectedParent.id);
-		preselectedContainer = preselectedParent.containers.find((obj: any) => obj.id === preselectedContainer.id) ?? preselectedParent.containers[0];
-		preselectedCategory = preselectedContainer.categories.find((obj: any) => obj.id === preselectedContainer.id) ?? preselectedContainer.categories[0];
-
-		return pages;
-	}
 
 	const addLink = async (link: Link) => {
 		const formData = new FormData();
@@ -47,8 +32,8 @@
 
 <LinkForm
 	on:proceed={(e) => addLink(e.detail.link)}
-	possiblePages={loadParents()}
-	bind:selectedPage={preselectedParent}
-	bind:selectedContainer={preselectedContainer}
-	bind:selectedCategory={preselectedCategory}
+	on:abort={closeContentWizard}
+	selectedPage={preselectedParent}
+	selectedContainer={preselectedContainer}
+	selectedCategory={preselectedCategory}
 />

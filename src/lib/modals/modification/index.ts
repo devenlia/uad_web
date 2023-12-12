@@ -11,17 +11,21 @@ export default ModificationModal;
 
 export { Type, Element, Parent}
 
-export const openModificationModal = async (type: 'page' | 'container' | 'category' | 'link', element: Page | Container | Category | Link | null, parentId: string | null, elementPath?: string) => {
+export const openModificationModal = async (type: 'page' | 'container' | 'category' | 'link', element: Page | Container | Category | Link | null, elementPath?: string) => {
+	let parentId;
+
 	if (element == null && elementPath) {
 		Element = await fetchData(`/get?type=search&path=${elementPath}`);
 		parentId = Element?.parentId ?? null
 	}
 	else {
 		Element = element
+		parentId = element!.parentId
 	}
 
 	if (parentId) {
 		Parent = (await loadParent(parentId, type))!;
+		console.log(Parent);
 	}
 	else {
 		throwError(500, "Something went wrong")

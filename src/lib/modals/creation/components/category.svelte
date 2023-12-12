@@ -10,22 +10,6 @@
 	import { CategoryForm, ContainerForm } from '$lib/components/forms';
 	import { CategoryCreation } from '$lib/modals/creation/components/index';
 
-	const loadParents = async (): Promise<Array<Page> | null> => {
-		let res: Response = await fetch(`/get?type=list`);
-
-		if (res.status != 200) {
-			await closeContentWizard();
-			throwError(res.status, await res.text());
-			return null;
-		}
-
-		let pages = await res.json();
-		preselectedParent = pages.find((obj: any) => obj.id === preselectedParent.id);
-		preselectedContainer = preselectedParent.containers.find((obj: any) => obj.id === preselectedContainer.id) ?? preselectedParent.containers[0];
-
-		return pages;
-	};
-
 	const addCategory = async (category: Category) => {
 		const formData = new FormData();
 		formData.append('type', 'category');
@@ -42,4 +26,4 @@
 	let preselectedContainer = $Parent.container;
 </script>
 
-<CategoryForm on:proceed={(e) => addCategory(e.detail.category)} possiblePages={loadParents()} bind:selectedPage={preselectedParent} bind:selectedContainer={preselectedContainer} />
+<CategoryForm on:proceed={(e) => addCategory(e.detail.category)} on:abort={closeContentWizard} selectedPage={preselectedParent} selectedContainer={preselectedContainer} />

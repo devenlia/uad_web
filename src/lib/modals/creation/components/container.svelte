@@ -9,21 +9,6 @@
 	import type { Container, Page } from '$lib/types';
 	import { ContainerForm, PageForm } from '$lib/components/forms';
 
-	const loadParents = async (): Promise<Array<Page> | null> => {
-		let res: Response = await fetch(`/get?type=list`);
-
-		if (res.status != 200) {
-			await closeContentWizard();
-			throwError(res.status, await res.text());
-			return null;
-		}
-
-		let pages = await res.json();
-		preselectedParent = pages.find((obj: any) => obj.id === (preselectedParent ? preselectedParent.id : '0'));
-
-		return pages;
-	};
-
 	const addContainer = async (container: Container) => {
 		const formData = new FormData();
 		formData.append('type', 'container');
@@ -39,4 +24,4 @@
 	let preselectedParent: Page = $Parent.page ?? { id: '0', name: 'Home', path: 'home', containers: [], subpages: [] };
 </script>
 
-<ContainerForm on:proceed={(e) => addContainer(e.detail.container)} possibleParents={loadParents()} bind:selectedParent={preselectedParent} />
+<ContainerForm on:proceed={(e) => addContainer(e.detail.container)} selectedParent={preselectedParent} />

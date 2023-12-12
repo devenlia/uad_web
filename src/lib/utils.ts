@@ -4,6 +4,9 @@ import { closeContentWizard } from '$lib/modals/creation';
 import type { Category, Container, Page } from '$lib/types';
 import { closeModificationModal } from '$lib/modals/modification';
 
+export const homePageDummy : Page = { id: '0', parentId: '', name: 'Home', path: 'home', containers: [], subpages: [] }
+export const emptyDummyContainer : Container = { id: '', name: '', parentId: '', categories: [] }
+
 export const throwError = (status: number, text: string) => {
 	addToast({ id: '', priority: 2, message: `An error occurred. Please check the console for detailed information.` });
 	console.error(`An error occurred. Status: ${status}, Message: ${text}`);

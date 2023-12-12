@@ -1,0 +1,28 @@
+<script lang="ts">
+	import { LinkForm } from '$lib/components/forms';
+	import type {  Link } from '$lib/types';
+	import { closeModificationModal, Parent } from '$lib/modals/modification';
+	import { invalidateAll } from '$app/navigation';
+	import { emptyDummyContainer, homePageDummy } from '$lib/utils';
+
+	export let Link : Link;
+
+	const updateLink = async (link: Link) => {
+		link.id = Link!.id
+
+		const formData = new FormData();
+		formData.append('type', 'link');
+		formData.append('object', JSON.stringify(link));
+
+		await fetch('/?/update', { method: 'POST', body: formData });
+
+		await invalidateAll();
+		await closeModificationModal();
+	};
+
+	let preselectedPage = Parent?.page ?? homePageDummy;
+	let preselectedContainer = Parent?.container ?? emptyDummyContainer
+	let preselectedCategory = Parent?.category ?? null
+</script>
+
+<LinkForm on:proceed={(e) => updateLink(e.detail.link)} on:abort={closeModificationModal} selectedPage={preselectedPage} selectedContainer={preselectedContainer} selectedCategory={preselectedCategory} link={Link}/>

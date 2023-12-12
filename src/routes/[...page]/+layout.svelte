@@ -58,7 +58,7 @@
 							</button>
 						</li>
 						<li class:tooltip={data.path === 'home'} class="w-full tooltip {data.path === 'home' ? 'disabled' : 'hover:text-error'}" data-tip={data.path === 'home' ? 'The homepage cannot be edited.' : ''}>
-							<button on:click={() => openModificationModal('page', null, null, data.path)}>
+							<button on:click={() => openModificationModal('page', null, data.path)}>
 								<IconParkOutlineEdit />
 								<span>Edit this page</span>
 							</button>

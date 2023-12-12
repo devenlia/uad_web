@@ -8,6 +8,8 @@
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
 	import { invalidateAll } from '$app/navigation';
 	import { openContentWizard } from '$lib/modals/creation';
+	import { openModificationModal } from '$lib/modals/modification';
+	import IconParkOutlineEdit from 'virtual:icons/icon-park-outline/edit-one';
 
 	export let container: Container;
 
@@ -59,6 +61,12 @@
 					</button>
 				</li>
 				<li>
+					<button on:click={() => openModificationModal('container', container)}>
+						<IconParkOutlineEdit />
+						<span>Edit this container</span>
+					</button>
+				</li>
+				<li>
 					<button on:click={() => openDeleteConfirmation(deleteContainer)}>
 						<IconParkOutlineDelete />
 						<span>Delete this container</span>
@@ -68,10 +76,11 @@
 		</div>
 	</div>
 
-	<div class="px-3">
+	<div class="px-3" style="margin-top: -10px">
 		<List {items} itemComponent={Category} onDrop={onCategoryDrop}>
-			<div class="text-center w-full pb-3">
-				<button on:click={() => openContentWizard('category', null, container.id)} class="btn btn-outline btn-sm">Add a new category,</button> or drag and drop one here.
+			<div class="text-center w-full pb-3 flex justify-center items-center gap-1">
+				<button on:click={() => openContentWizard('category', null, container.id)} class="btn btn-outline btn-sm">Add a new category,</button>
+				<p>or drag and drop one here.</p>
 			</div>
 		</List>
 	</div>

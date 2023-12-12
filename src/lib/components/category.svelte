@@ -5,12 +5,14 @@
 	import IconParkOutlineDelete from 'virtual:icons/icon-park-outline/delete';
 	import IconParkOutlineDrag from 'virtual:icons/icon-park-outline/drag';
 	import IconParkOutlineEdit from 'virtual:icons/icon-park-outline/edit-two';
+	import IconParkOutlineEditTwo from 'virtual:icons/icon-park-outline/edit-one';
 	import IconParkOutlineCheck from 'virtual:icons/icon-park-outline/check';
 	import IconParkOutlinePlus from 'virtual:icons/icon-park-outline/plus';
 	import { openDeleteConfirmation } from '../modals/deletion';
 	import { invalidateAll } from '$app/navigation';
 	import { LinkGrid } from '$lib/components';
 	import IconParkOutlineMore from 'virtual:icons/icon-park-outline/more-one';
+	import { openModificationModal } from '$lib/modals/modification';
 
 	export let item: Category;
 
@@ -66,10 +68,11 @@
 		{#if item.links.length === 0}
 			<div class="flex content-center gap-x-1 relative" style="right: -30px">
 				<button class="btn btn-sm btn-outline z-50" on:click={() => openContentWizard('link', null, item.id)}>Add a link!</button>
+				<button class="btn btn-sm btn-outline z-50" on:click={() => openModificationModal('category', item)}>Edit!</button>
 				<button class="btn btn-sm btn-outline btn-square hover:btn-error z-50" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete /></button>
 			</div>
 		{:else}
-			<div class="z-50 relative" style="right: -30px">
+			<div class="z-50 relative flex justify-end items-center gap-1" style="right: -30px">
 				{#if editMode}
 					<div class="tooltip tooltip-left" data-tip="Apply">
 						<button class="btn btn-sm btn-square" on:click={() => (editMode = false)}>
@@ -77,6 +80,11 @@
 						</button>
 					</div>
 				{:else}
+					<div class="tooltip tooltip-left" data-tip="Enable link-editing mode">
+						<button class="btn btn-sm btn-square btn-ghost" on:click={() => (editMode = true)}>
+							<IconParkOutlineEdit />
+						</button>
+					</div>
 					<div class="dropdown dropdown-left">
 						<div tabindex="0" role="button" class="btn btn-sm btn-square btn-ghost text-lg"><IconParkOutlineMore/></div>
 						<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-max" style="top: -5px">
@@ -87,9 +95,9 @@
 								</button>
 							</li>
 							<li>
-								<button on:click={() => (editMode = true)}>
-									<IconParkOutlineEdit />
-									<span>Enable Link Edit Mode</span>
+								<button on:click={() => openModificationModal('category', item)}>
+									<IconParkOutlineEditTwo />
+									<span>Edit this category</span>
 								</button>
 							</li>
 							<li>

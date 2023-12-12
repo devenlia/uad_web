@@ -7,8 +7,6 @@
 	import type { Page } from '$lib/types';
 	import { Parent } from '$lib/modals/creation/store';
 
-
-
 	const addPage = async (page: Page) => {
 		const formData = new FormData();
 		formData.append('type', 'page');

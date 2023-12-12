@@ -9,7 +9,7 @@
 		LinkModification,
 		PageModification
 	} from '$lib/modals/modification/components';
-	import type { Page } from '$lib/types';
+	import type { Category, Container, Link, Page } from '$lib/types';
 
 	onMount(() => {
 		window.addEventListener('keydown', handleKeyDown);
@@ -44,11 +44,11 @@
 				{#if Type === 'page'}
 					<PageModification Page={Element}/>
 				{:else if Type === 'container'}
-					<ContainerModification />
+					<ContainerModification Container={Element}/>
 				{:else if Type === 'category'}
-					<CategoryModification />
+					<CategoryModification Category={Element}/>
 				{:else if Type === 'link'}
-					<LinkModification />
+					<LinkModification Link={Element}/>
 				{/if}
 			</div>
 		</div>

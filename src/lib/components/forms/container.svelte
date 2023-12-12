@@ -2,11 +2,27 @@
 <script lang="ts">
 	import { closeContentWizard } from '$lib/modals/creation/index.js';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import type { Page } from '$lib/types.js';
+	import type { Container, Page } from '$lib/types.js';
 	import { ActionButtons, Input, Select } from '$lib/components/forms/elements';
+	import { throwError } from '$lib/utils';
 
-	export let possibleParents: Promise<Array<Page> | null> | null;
-	export let selectedParent: Page;
+	export let container : Container | null = null
+	export let selectedParent: Page | null;
+
+	const loadParents = async (): Promise<Array<Page> | null> => {
+		let res: Response = await fetch(`/get?type=list`);
+
+		if (res.status != 200) {
+			await closeContentWizard();
+			throwError(res.status, await res.text());
+			return null;
+		}
+
+		let pages = await res.json();
+		selectedParent = pages.find((obj: any) => obj.id === (selectedParent ? selectedParent.id : '0'));
+
+		return pages;
+	};
 
 	const validateForm = () => {
 		if (!selectedParent) {
@@ -26,9 +42,16 @@
 
 	const proceed = async () => {
 		if (validateForm()) {
-			dispatch('proceed', { container: { name: containerName, parentId: selectedParent.id } });
+			dispatch('proceed', { container: {
+				name: containerName,
+				parentId: selectedParent!.id
+			} });
 		}
 	};
+
+	const abort = () => {
+		dispatch('abort');
+	}
 
 	const handleKeyDown = (event: KeyboardEvent) => {
 		if (event.key === 'Enter') {
@@ -41,6 +64,10 @@
 	};
 
 	onMount(() => {
+		if (container) {
+			containerName = container.name
+			edit = true
+		}
 		window.addEventListener('keydown', handleKeyDown);
 		ref.focus();
 		return () => window.removeEventListener('keydown', handleKeyDown);
@@ -48,8 +75,20 @@
 
 	const dispatch = createEventDispatcher();
 
-	$: parentLabels = ['Select the <b>parent</b> of your new container:', '', '', `${parentInvalid.true ? parentInvalid.errorMessage : ''}`];
-	$: nameLabels = ['Give your container a <b>name</b>:', '', '', `${nameInvalid.true ? nameInvalid.errorMessage : ''}`];
+	$: parentLabels = [
+		edit ? 'Select the new <b>parent</b> of the container:' : 'Select the <b>parent</b> of your new container:',
+		'', '',
+		`${parentInvalid.true ? parentInvalid.errorMessage : ''}`
+	];
+	$: nameLabels = [
+		edit ? 'Edit the <b>name</b> of the container:' : 'Give your container a <b>name</b>:',
+		'', '',
+		`${nameInvalid.true ? nameInvalid.errorMessage : ''}`
+	];
+
+	let edit = false
+
+	let possibleParents = loadParents()
 
 	let parentInvalid = { true: false, errorMessage: '' };
 
@@ -61,25 +100,23 @@
 </script>
 
 <div class="w-full">
-	{#if possibleParents != null}
-		{#await possibleParents}
-			<Select bind:selectedValue={selectedParent} options={[selectedParent]} optionTextFormatter={formatOptionText} name="parentPage" labels={parentLabels} disabled={true} />
-		{:then values}
-			{#if values}
-				<Select
-					bind:selectedValue={selectedParent}
-					options={values}
-					optionTextFormatter={formatOptionText}
-					name="parentPage"
-					labels={parentLabels}
-					disabled={values.length <= 1}
-					invalid={parentInvalid.true}
-				/>
-			{/if}
-		{/await}
-	{/if}
+	{#await possibleParents}
+		<Select bind:selectedValue={selectedParent} options={[selectedParent]} optionTextFormatter={formatOptionText} name="parentPage" labels={parentLabels} disabled={true} />
+	{:then values}
+		{#if values}
+			<Select
+				bind:selectedValue={selectedParent}
+				options={values}
+				optionTextFormatter={formatOptionText}
+				name="parentPage"
+				labels={parentLabels}
+				disabled={values.length <= 1}
+				invalid={parentInvalid.true}
+			/>
+		{/if}
+	{/await}
 
-	<Input bind:ref bind:value={containerName} name="name" labels={nameLabels} invalid={nameInvalid.true} />
+	<Input bind:ref bind:value={containerName} name="name" placeholder="Lurch Schpellchek" labels={nameLabels} invalid={nameInvalid.true} />
 
-	<ActionButtons proceedText="Save" abortText="Discard" on:proceed={proceed} on:abort={closeContentWizard} />
+	<ActionButtons proceedText="Save" abortText="Discard" on:proceed={proceed} on:abort={abort} />
 </div>
