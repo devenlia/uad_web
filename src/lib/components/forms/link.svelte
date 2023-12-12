@@ -67,7 +67,7 @@
 		if (linkHref == '') {
 			hrefInvalid = { true: true, errorMessage: 'Supply a destination!' };
 			return false;
-		} else if (!linkHref.startsWith('http://') || !linkHref.startsWith('https://')) {
+		} else if (!linkHref.startsWith('http://') && !linkHref.startsWith('https://')) {
 			linkHref = 'https://' + linkHref;
 		}
 		if (!validator.isURL(linkHref, { require_protocol: true })) {
