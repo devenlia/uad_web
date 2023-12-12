@@ -5,6 +5,7 @@
 	import type { Category, Container, Link, Page } from '$lib/types';
 	import { ActionButtons, Input, Select } from '$lib/components/forms/elements';
 	import { throwError } from '$lib/utils';
+	import validator from 'validator';
 
 	export let link : Link | null = null
 	export let selectedPage: Page;
@@ -65,6 +66,13 @@
 		linkHref = linkHref?.trim();
 		if (linkHref == '') {
 			hrefInvalid = { true: true, errorMessage: 'Supply a destination!' };
+			return false;
+		}
+		else if (!linkHref.startsWith('http://') || !linkHref.startsWith('https://')) {
+			linkHref = 'https://' + linkHref
+		}
+		if (!validator.isURL(linkHref, { require_protocol: true })) {
+			hrefInvalid = { true: true, errorMessage: 'Invalid URL!' };
 			return false;
 		}
 		hrefInvalid = { true: false, errorMessage: '' };
