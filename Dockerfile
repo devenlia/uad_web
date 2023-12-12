@@ -1,6 +1,7 @@
 FROM node:lts-slim AS build
 WORKDIR /app
 COPY package*.json ./
+RUN apt-get update -y && apt-get install -y python3 build-essential
 RUN npm ci
 COPY . .
 RUN npm run check
