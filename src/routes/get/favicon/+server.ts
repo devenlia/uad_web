@@ -59,6 +59,10 @@ const fetchFavicon = async (fetch: any, rawUrl: string) => {
 		}
 		let icon;
 
+		if (contentType.includes(';')) {
+			contentType = contentType.split(';')[0]
+		}
+
 		switch (contentType) {
 			case 'image/x-icon':
 			case 'image/vnd.microsoft.icon':
