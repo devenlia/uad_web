@@ -6,7 +6,7 @@
 	import { closeContentWizard } from '$lib/modals/creation';
 	import { throwError } from '$lib/utils';
 
-	export let page : Page | null = null
+	export let page: Page | null = null;
 	export let selectedParent: Page | null;
 
 	const loadParents = async (): Promise<Array<Page> | null> => {
@@ -22,7 +22,7 @@
 		selectedParent = pages.find((obj: any) => obj.id === (selectedParent ? selectedParent?.id : '0'));
 
 		if (page) {
-			pages = pages.filter((obj : Page) => obj.id !== page?.id)
+			pages = pages.filter((obj: Page) => obj.id !== page?.id);
 		}
 
 		return pages;
@@ -55,17 +55,19 @@
 
 	const proceed = async () => {
 		if (await validateForm()) {
-			dispatch('proceed', { page: {
-				name: pageName,
-				parentId: selectedParent!.id,
-				path: convertNameToPath(selectedParent!.path, pageName)
-			} });
+			dispatch('proceed', {
+				page: {
+					name: pageName,
+					parentId: selectedParent!.id,
+					path: convertNameToPath(selectedParent!.path, pageName)
+				}
+			});
 		}
 	};
 
 	const abort = () => {
 		dispatch('abort');
-	}
+	};
 
 	const handleKeyDown = (event: KeyboardEvent) => {
 		if (event.key === 'Enter') {
@@ -93,8 +95,8 @@
 
 	onMount(() => {
 		if (page) {
-			pageName = page.name
-			edit = true
+			pageName = page.name;
+			edit = true;
 		}
 		window.addEventListener('keydown', handleKeyDown);
 		ref.focus();
@@ -103,18 +105,15 @@
 
 	const dispatch = createEventDispatcher();
 
-	$: parentLabels = [
-		edit ? 'Select the new <b>parent</b> of the page:' :'Select the <b>parent</b> of your new page:',
-		'', '',
-		`${parentInvalid.true ? parentInvalid.errorMessage : ''}`];
+	$: parentLabels = [edit ? 'Select the new <b>parent</b> of the page:' : 'Select the <b>parent</b> of your new page:', '', '', `${parentInvalid.true ? parentInvalid.errorMessage : ''}`];
 	$: nameLabels = [
-		edit? 'Edit the <b>name</b> of the page:' : 'Give your page a <b>name</b>:',
+		edit ? 'Edit the <b>name</b> of the page:' : 'Give your page a <b>name</b>:',
 		'',
 		`Path will be: ${convertNameToPath(selectedParent?.path ?? 'loading', pageName != '' ? pageName : 'newPage')}`,
 		`${nameInvalid.true ? nameInvalid.errorMessage : ''}`
 	];
 
-	let edit = false
+	let edit = false;
 
 	let possibleParents = loadParents();
 

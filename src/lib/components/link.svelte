@@ -16,8 +16,7 @@
 		const blackDistance = Math.sqrt(rgb[0] * rgb[0] + rgb[1] * rgb[1] + rgb[2] * rgb[2]);
 		const whiteDistance = Math.sqrt(Math.pow(255 - rgb[0], 2) + Math.pow(255 - rgb[1], 2) + Math.pow(255 - rgb[2], 2));
 
-		if (blackDistance < threshold || whiteDistance < threshold)
-			border = true;
+		if (blackDistance < threshold || whiteDistance < threshold) border = true;
 	};
 
 	const isLight = (rgb: RGB) => {
@@ -57,15 +56,13 @@
 </script>
 
 <div class="w-full flex gap-1 rounded-btn {editMode ? 'hover:outline outline-accent outline-1' : ''}">
-
 	{#if editMode}
 		<div class="flex justify-between items-center bg-neutral h-12 w-full rounded-btn px-3">
 			<span class="avatar w-8">
-					{#if favicon && favicon !== "none"}
-						<img class="mask mask-squircle p-1 {editMode ? 'bg-gray-400' : 'bg-white'}"
-								 src={'data:image/ico;base64, ' + favicon} alt="favicon">
-					{/if}
-				</span>
+				{#if favicon && favicon !== 'none'}
+					<img class="mask mask-squircle p-1 {editMode ? 'bg-gray-400' : 'bg-white'}" src={'data:image/ico;base64, ' + favicon} alt="favicon" />
+				{/if}
+			</span>
 			{link.name}
 			<div class="dropdown dropdown-hover dropdown-left">
 				<div tabindex="0" role="button" class="btn btn-square btn-ghost btn-sm"><IconParkOutlineWrite /></div>
@@ -76,30 +73,33 @@
 						</button>
 					</div>
 					<div class="tooltip tooltip-top tooltip-info" data-tip="Delete this link">
-						<button on:click={() => openDeleteConfirmation(() => deleteLink(link), 'Link', `You're about to delete the link '${link.name}'.<br/> Careful, this can't be undone!`)} class="btn btn-square btn-ghost btn-sm hover:text-error">
+						<button
+							on:click={() => openDeleteConfirmation(() => deleteLink(link), 'Link', `You're about to delete the link '${link.name}'.<br/> Careful, this can't be undone!`)}
+							class="btn btn-square btn-ghost btn-sm hover:text-error"
+						>
 							<IconParkOutlineDelete />
 						</button>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	{:else}
 		<div class="flex-auto" class:tooltip={!editMode} data-tip={link.href}>
-			<a href={link.href} target="_blank" class:text-white={fontWhite}
-				 class="flex justify-between btn btn-primary h-full w-full {editMode ? 'btn-disabled pointer-events-none' : ''} {border ?  'border-neutral' : 'border-none'}"
-				 style={(color && color !== "none" && !editMode) ? 'background-color: ' + color : ''}>
+			<a
+				href={link.href}
+				target="_blank"
+				class:text-white={fontWhite}
+				class="flex justify-between btn btn-primary h-full w-full {editMode ? 'btn-disabled pointer-events-none' : ''} {border ? 'border-neutral' : 'border-none'}"
+				style={color && color !== 'none' && !editMode ? 'background-color: ' + color : ''}
+			>
 				<span class="avatar w-8">
-					{#if favicon && favicon !== "none"}
-						<img class="mask mask-squircle p-1 {editMode ? 'bg-gray-400' : 'bg-white'}"
-								 src={'data:image/ico;base64, ' + favicon} alt="favicon">
+					{#if favicon && favicon !== 'none'}
+						<img class="mask mask-squircle p-1 {editMode ? 'bg-gray-400' : 'bg-white'}" src={'data:image/ico;base64, ' + favicon} alt="favicon" />
 					{/if}
 				</span>
 				{link.name}
-				<span class="avatar w-8"/>
+				<span class="avatar w-8" />
 			</a>
 		</div>
 	{/if}
-
-
 </div>

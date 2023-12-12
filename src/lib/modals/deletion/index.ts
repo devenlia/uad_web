@@ -7,9 +7,9 @@ export default DeleteConfirmation;
 let action: any = null;
 export let Type: string, Message: string;
 
-export function openDeleteConfirmation(act: any, type : string, message : string) {
+export function openDeleteConfirmation(act: any, type: string, message: string) {
 	Type = type;
-  Message = message;
+	Message = message;
 	action = act;
 	Visible.set(true);
 }

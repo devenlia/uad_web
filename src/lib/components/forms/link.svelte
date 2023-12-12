@@ -7,7 +7,7 @@
 	import { throwError } from '$lib/utils';
 	import validator from 'validator';
 
-	export let link : Link | null = null
+	export let link: Link | null = null;
 	export let selectedPage: Page;
 	export let selectedContainer: Container;
 	export let selectedCategory: Category | null;
@@ -67,9 +67,8 @@
 		if (linkHref == '') {
 			hrefInvalid = { true: true, errorMessage: 'Supply a destination!' };
 			return false;
-		}
-		else if (!linkHref.startsWith('http://') || !linkHref.startsWith('https://')) {
-			linkHref = 'https://' + linkHref
+		} else if (!linkHref.startsWith('http://') || !linkHref.startsWith('https://')) {
+			linkHref = 'https://' + linkHref;
 		}
 		if (!validator.isURL(linkHref, { require_protocol: true })) {
 			hrefInvalid = { true: true, errorMessage: 'Invalid URL!' };
@@ -97,9 +96,9 @@
 
 	onMount(() => {
 		if (link) {
-			linkName = link.name
-			linkHref = link.href
-			edit = true
+			linkName = link.name;
+			linkHref = link.href;
+			edit = true;
 		}
 		window.addEventListener('keydown', handleKeyDown);
 		ref.focus();
@@ -108,48 +107,46 @@
 
 	const proceed = async () => {
 		if (validateForm()) {
-			dispatch('proceed', { link: {
-				name: linkName,
-				href: linkHref,
-				parentId: selectedCategory!.id } });
+			dispatch('proceed', {
+				link: {
+					name: linkName,
+					href: linkHref,
+					parentId: selectedCategory!.id
+				}
+			});
 		}
 	};
 
 	const abort = () => {
 		dispatch('abort');
-	}
+	};
 
 	const dispatch = createEventDispatcher();
 
 	$: parentPageLabels = [
 		edit ? 'Select the new <b>parent page</b> of the link:' : 'Select the <b>parent page</b> of your new link:',
-		'', '',
+		'',
+		'',
 		`${parentPageInvalid.true ? parentPageInvalid.errorMessage : ''}`
 	];
 	$: parentContainerLabels = [
 		edit ? 'Select the new <b>parent container</b> of the link:' : 'Select the <b>parent container</b> of your new link:',
-		'', '',
+		'',
+		'',
 		`${parentContainerInvalid.true ? parentContainerInvalid.errorMessage : ''}`
 	];
 	$: parentCategoryLabels = [
 		edit ? 'Select the new <b>parent category</b> of the link:' : 'Select the <b>parent category</b> of your new link:',
-		'', '',
+		'',
+		'',
 		`${parentCategoryInvalid.true ? parentCategoryInvalid.errorMessage : ''}`
 	];
-	$: nameLabels = [
-		edit ? 'Edit the <b>name</b> of the link:' : 'Give your link a <b>name</b>:',
-		'', '',
-		`${nameInvalid.true ? nameInvalid.errorMessage : ''}`
-	];
-	$: hrefLabels = [
-		edit ? 'Edit the <b>target URL</b> of the link:' : 'Please specify the <b>target URL</b> for your new link:',
-		'', '',
-		`${hrefInvalid.true ? hrefInvalid.errorMessage : ''}`
-	];
+	$: nameLabels = [edit ? 'Edit the <b>name</b> of the link:' : 'Give your link a <b>name</b>:', '', '', `${nameInvalid.true ? nameInvalid.errorMessage : ''}`];
+	$: hrefLabels = [edit ? 'Edit the <b>target URL</b> of the link:' : 'Please specify the <b>target URL</b> for your new link:', '', '', `${hrefInvalid.true ? hrefInvalid.errorMessage : ''}`];
 
-	let edit = false
+	let edit = false;
 
-	let possiblePages = loadParents()
+	let possiblePages = loadParents();
 
 	let parentPageInvalid = { true: false, errorMessage: '' };
 	let parentContainerInvalid = { true: false, errorMessage: '' };

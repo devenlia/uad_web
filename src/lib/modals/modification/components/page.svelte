@@ -7,11 +7,11 @@
 	import { closeModificationModal, Parent } from '$lib/modals/modification';
 	import { goto, invalidateAll } from '$app/navigation';
 
-	export let Page : Page | Container | Category | Link | null;
-	const page = Page as Page
+	export let Page: Page | Container | Category | Link | null;
+	const page = Page as Page;
 
 	const updatePage = async (updatedPage: Page) => {
-		updatedPage.id = page.id
+		updatedPage.id = page.id;
 		updatedPage.containers = page.containers;
 		updatedPage.subpages = page.subpages;
 
@@ -28,4 +28,4 @@
 	let preselectedParent = Parent?.page ?? null;
 </script>
 
-<PageForm on:proceed={(e) => updatePage(e.detail.page)} on:abort={closeModificationModal} selectedParent={preselectedParent} page={page}/>
+<PageForm on:proceed={(e) => updatePage(e.detail.page)} on:abort={closeModificationModal} selectedParent={preselectedParent} {page} />

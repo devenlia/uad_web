@@ -6,7 +6,7 @@
 	import { ActionButtons, Input, Select } from '$lib/components/forms/elements';
 	import { throwError } from '$lib/utils';
 
-	export let category : Category | null = null
+	export let category: Category | null = null;
 	export let selectedPage: Page;
 	export let selectedContainer: Container | null | undefined;
 
@@ -69,8 +69,8 @@
 
 	onMount(() => {
 		if (category) {
-			categoryName = category.name
-			edit = true
+			categoryName = category.name;
+			edit = true;
 		}
 		window.addEventListener('keydown', handleKeyDown);
 		ref.focus();
@@ -79,35 +79,36 @@
 
 	const proceed = async () => {
 		if (validateForm()) {
-			dispatch('proceed', { category: {
-				name: categoryName,
-				parentId: selectedContainer!.id } });
+			dispatch('proceed', {
+				category: {
+					name: categoryName,
+					parentId: selectedContainer!.id
+				}
+			});
 		}
 	};
 
 	const abort = () => {
 		dispatch('abort');
-	}
+	};
 
 	const dispatch = createEventDispatcher();
 
 	$: parentPageLabels = [
 		edit ? 'Select the new <b>parent page</b> of the category:' : 'Select the <b>parent page</b> of your new category:',
-		'', '',
+		'',
+		'',
 		`${parentPageInvalid.true ? parentPageInvalid.errorMessage : ''}`
 	];
 	$: parentContainerLabels = [
 		edit ? 'Select the new <b>parent container</b> of the category:' : 'Select the <b>parent container</b> of your new category:',
-		'', '',
+		'',
+		'',
 		`${parentContainerInvalid.true ? parentContainerInvalid.errorMessage : ''}`
 	];
-	$: nameLabels = [
-		edit ? 'Edit the <b>name</b> of the category:' : 'Give your category a <b>name</b>:',
-		'', '',
-		`${nameInvalid.true ? nameInvalid.errorMessage : ''}`
-	];
+	$: nameLabels = [edit ? 'Edit the <b>name</b> of the category:' : 'Give your category a <b>name</b>:', '', '', `${nameInvalid.true ? nameInvalid.errorMessage : ''}`];
 
-	let edit = false
+	let edit = false;
 
 	let possiblePages = loadParents();
 

@@ -2,7 +2,7 @@
 import type { RequestHandler } from './$types';
 import { fetchRequest, getBackendUrl } from '$lib/utils.server';
 import { JSDOM } from 'jsdom';
-import ColorThief from 'pure-color-thief-node'
+import ColorThief from 'pure-color-thief-node';
 import icoToPng from 'ico-to-png';
 import type { RGB } from '$lib/types';
 import * as url from 'url';
@@ -13,8 +13,6 @@ const getData = (params: URLSearchParams) => {
 
 	return { type, id };
 };
-
-
 
 export const GET: RequestHandler = async ({ url, fetch }) => {
 	const data = getData(url.searchParams);

@@ -21,5 +21,3 @@ export async function closeContentWizard() {
 	await new Promise((f) => setTimeout(f, 200));
 	reset();
 }
-
-

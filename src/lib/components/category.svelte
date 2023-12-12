@@ -69,7 +69,12 @@
 			<div class="flex content-center gap-x-1 relative" style="right: -30px">
 				<button class="btn btn-sm btn-outline z-50" on:click={() => openContentWizard('link', null, item.id)}>Add a link!</button>
 				<button class="btn btn-sm btn-outline z-50" on:click={() => openModificationModal('category', item)}>Edit!</button>
-				<button class="btn btn-sm btn-outline btn-square hover:btn-error z-50" on:click={() => openDeleteConfirmation(deleteCategory, 'Category', `Please note, you are about to delete the category '${item.name}' along with all of its content.<br/> This action cannot be undone!`)}><IconParkOutlineDelete /></button>
+				<button
+					class="btn btn-sm btn-outline btn-square hover:btn-error z-50"
+					on:click={() =>
+						openDeleteConfirmation(deleteCategory, 'Category', `Please note, you are about to delete the category '${item.name}' along with all of its content.<br/> This action cannot be undone!`)}
+					><IconParkOutlineDelete /></button
+				>
 			</div>
 		{:else}
 			<div class="z-50 relative flex justify-end items-center gap-1" style="right: -30px">
@@ -86,7 +91,7 @@
 						</button>
 					</div>
 					<div class="dropdown dropdown-left">
-						<div tabindex="0" role="button" class="btn btn-sm btn-square btn-ghost text-lg"><IconParkOutlineMore/></div>
+						<div tabindex="0" role="button" class="btn btn-sm btn-square btn-ghost text-lg"><IconParkOutlineMore /></div>
 						<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-max" style="top: -5px">
 							<li>
 								<button on:click={() => openContentWizard('link', null, item.id)}>
@@ -101,7 +106,14 @@
 								</button>
 							</li>
 							<li>
-								<button on:click={() => openDeleteConfirmation(deleteCategory, 'Category', `Please note, you are about to delete the category '${item.name}' along with all of its content.<br/> This action cannot be undone!`)}>
+								<button
+									on:click={() =>
+										openDeleteConfirmation(
+											deleteCategory,
+											'Category',
+											`Please note, you are about to delete the category '${item.name}' along with all of its content.<br/> This action cannot be undone!`
+										)}
+								>
 									<IconParkOutlineDelete />
 									<span>Delete this container</span>
 								</button>

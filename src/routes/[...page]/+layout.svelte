@@ -49,7 +49,7 @@
 			</div>
 			<div class="flex-none">
 				<div class="dropdown dropdown-left">
-					<div tabindex="0" role="button" class="btn btn-square btn-ghost m-1 text-lg"><IconParkOutlineMore/></div>
+					<div tabindex="0" role="button" class="btn btn-square btn-ghost m-1 text-lg"><IconParkOutlineMore /></div>
 					<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-max">
 						<li>
 							<button on:click={() => openContentWizard('select', data.path)}>
@@ -57,13 +57,21 @@
 								<span>Open Content Wizard</span>
 							</button>
 						</li>
-						<li class:tooltip={data.path === 'home'} class="w-full tooltip {data.path === 'home' ? 'disabled' : 'hover:text-error'}" data-tip={data.path === 'home' ? 'The homepage cannot be edited.' : ''}>
+						<li
+							class:tooltip={data.path === 'home'}
+							class="w-full tooltip {data.path === 'home' ? 'disabled' : 'hover:text-error'}"
+							data-tip={data.path === 'home' ? 'The homepage cannot be edited.' : ''}
+						>
 							<button on:click={() => openModificationModal('page', null, data.path)}>
 								<IconParkOutlineEdit />
 								<span>Edit this page</span>
 							</button>
 						</li>
-						<li class:tooltip={data.path === 'home'} class="w-full tooltip {data.path === 'home' ? 'disabled' : 'hover:text-error'}" data-tip={data.path === 'home' ? 'The homepage cannot be deleted.' : ''}>
+						<li
+							class:tooltip={data.path === 'home'}
+							class="w-full tooltip {data.path === 'home' ? 'disabled' : 'hover:text-error'}"
+							data-tip={data.path === 'home' ? 'The homepage cannot be deleted.' : ''}
+						>
 							<button on:click={() => openDeleteConfirmation(deletePage, 'Page', `You're about to delete the page at '${data.path}'.<br/> Careful, this can't be undone!`)} class="w-full">
 								<IconParkOutlineDelete />
 								<span>Delete this page</span>

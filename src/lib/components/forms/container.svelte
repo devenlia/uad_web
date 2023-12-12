@@ -6,7 +6,7 @@
 	import { ActionButtons, Input, Select } from '$lib/components/forms/elements';
 	import { throwError } from '$lib/utils';
 
-	export let container : Container | null = null
+	export let container: Container | null = null;
 	export let selectedParent: Page | null;
 
 	const loadParents = async (): Promise<Array<Page> | null> => {
@@ -42,16 +42,18 @@
 
 	const proceed = async () => {
 		if (validateForm()) {
-			dispatch('proceed', { container: {
-				name: containerName,
-				parentId: selectedParent!.id
-			} });
+			dispatch('proceed', {
+				container: {
+					name: containerName,
+					parentId: selectedParent!.id
+				}
+			});
 		}
 	};
 
 	const abort = () => {
 		dispatch('abort');
-	}
+	};
 
 	const handleKeyDown = (event: KeyboardEvent) => {
 		if (event.key === 'Enter') {
@@ -65,8 +67,8 @@
 
 	onMount(() => {
 		if (container) {
-			containerName = container.name
-			edit = true
+			containerName = container.name;
+			edit = true;
 		}
 		window.addEventListener('keydown', handleKeyDown);
 		ref.focus();
@@ -75,20 +77,12 @@
 
 	const dispatch = createEventDispatcher();
 
-	$: parentLabels = [
-		edit ? 'Select the new <b>parent</b> of the container:' : 'Select the <b>parent</b> of your new container:',
-		'', '',
-		`${parentInvalid.true ? parentInvalid.errorMessage : ''}`
-	];
-	$: nameLabels = [
-		edit ? 'Edit the <b>name</b> of the container:' : 'Give your container a <b>name</b>:',
-		'', '',
-		`${nameInvalid.true ? nameInvalid.errorMessage : ''}`
-	];
+	$: parentLabels = [edit ? 'Select the new <b>parent</b> of the container:' : 'Select the <b>parent</b> of your new container:', '', '', `${parentInvalid.true ? parentInvalid.errorMessage : ''}`];
+	$: nameLabels = [edit ? 'Edit the <b>name</b> of the container:' : 'Give your container a <b>name</b>:', '', '', `${nameInvalid.true ? nameInvalid.errorMessage : ''}`];
 
-	let edit = false
+	let edit = false;
 
-	let possibleParents = loadParents()
+	let possibleParents = loadParents();
 
 	let parentInvalid = { true: false, errorMessage: '' };
 

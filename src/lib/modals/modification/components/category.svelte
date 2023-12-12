@@ -6,11 +6,11 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import { homePageDummy } from '$lib/utils';
 
-	export let Category : Page | Container | Category | Link | null;
-	const category = Category as Category
+	export let Category: Page | Container | Category | Link | null;
+	const category = Category as Category;
 
 	const updateCategory = async (updatedCategory: Category) => {
-		updatedCategory.id = category.id
+		updatedCategory.id = category.id;
 		updatedCategory.links = category.links;
 
 		const formData = new FormData();
@@ -24,7 +24,7 @@
 	};
 
 	let preselectedPage = Parent?.page ?? homePageDummy;
-	let preselectedContainer = Parent?.container ?? null
+	let preselectedContainer = Parent?.container ?? null;
 </script>
 
-<CategoryForm on:proceed={(e) => updateCategory(e.detail.category)} on:abort={closeModificationModal} selectedPage={preselectedPage} selectedContainer={preselectedContainer} category={category}/>
+<CategoryForm on:proceed={(e) => updateCategory(e.detail.category)} on:abort={closeModificationModal} selectedPage={preselectedPage} selectedContainer={preselectedContainer} {category} />

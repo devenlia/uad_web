@@ -6,11 +6,11 @@
 	import { invalidateAll } from '$app/navigation';
 	import { emptyDummyContainer, homePageDummy } from '$lib/utils';
 
-	export let Link : Page | Container | Category | Link | null;
-	const link = Link as Link
+	export let Link: Page | Container | Category | Link | null;
+	const link = Link as Link;
 
 	const updateLink = async (updatedLink: Link) => {
-		updatedLink.id = link.id
+		updatedLink.id = link.id;
 
 		const formData = new FormData();
 		formData.append('type', 'link');
@@ -23,8 +23,15 @@
 	};
 
 	let preselectedPage = Parent?.page ?? homePageDummy;
-	let preselectedContainer = Parent?.container ?? emptyDummyContainer
-	let preselectedCategory = Parent?.category ?? null
+	let preselectedContainer = Parent?.container ?? emptyDummyContainer;
+	let preselectedCategory = Parent?.category ?? null;
 </script>
 
-<LinkForm on:proceed={(e) => updateLink(e.detail.link)} on:abort={closeModificationModal} selectedPage={preselectedPage} selectedContainer={preselectedContainer} selectedCategory={preselectedCategory} link={link}/>
+<LinkForm
+	on:proceed={(e) => updateLink(e.detail.link)}
+	on:abort={closeModificationModal}
+	selectedPage={preselectedPage}
+	selectedContainer={preselectedContainer}
+	selectedCategory={preselectedCategory}
+	{link}
+/>

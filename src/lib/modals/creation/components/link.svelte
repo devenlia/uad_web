@@ -10,8 +10,6 @@
 	import { CategoryForm, LinkForm } from '$lib/components/forms';
 	import type { Link } from '$lib/types';
 
-
-
 	const addLink = async (link: Link) => {
 		const formData = new FormData();
 		formData.append('type', 'link');
@@ -30,10 +28,4 @@
 	let preselectedCategory = $Parent.category;
 </script>
 
-<LinkForm
-	on:proceed={(e) => addLink(e.detail.link)}
-	on:abort={closeContentWizard}
-	selectedPage={preselectedParent}
-	selectedContainer={preselectedContainer}
-	selectedCategory={preselectedCategory}
-/>
+<LinkForm on:proceed={(e) => addLink(e.detail.link)} on:abort={closeContentWizard} selectedPage={preselectedParent} selectedContainer={preselectedContainer} selectedCategory={preselectedCategory} />

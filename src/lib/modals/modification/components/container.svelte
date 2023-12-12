@@ -5,11 +5,11 @@
 	import { closeModificationModal, Parent } from '$lib/modals/modification';
 	import { goto, invalidateAll } from '$app/navigation';
 
-	export let Container : Page | Container | Category | Link | null;
-	const container = Container as Container
+	export let Container: Page | Container | Category | Link | null;
+	const container = Container as Container;
 
 	const updateContainer = async (updatedContainer: Container) => {
-		updatedContainer.id = container.id
+		updatedContainer.id = container.id;
 		updatedContainer.categories = container.categories;
 
 		const formData = new FormData();
@@ -25,4 +25,4 @@
 	let preselectedParent = Parent?.page ?? null;
 </script>
 
-<ContainerForm on:proceed={(e) => updateContainer(e.detail.container)} on:abort={closeModificationModal} selectedParent={preselectedParent} container={container}/>
+<ContainerForm on:proceed={(e) => updateContainer(e.detail.container)} on:abort={closeModificationModal} selectedParent={preselectedParent} {container} />

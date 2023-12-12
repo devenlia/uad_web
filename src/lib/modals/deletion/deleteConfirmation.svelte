@@ -26,11 +26,11 @@
 		{#key $Visible}
 			<h3 class="font-bold text-2xl text-center">Are you sure you want to delete this {Type}</h3>
 		{/key}
-		<div class="divider"></div>
+		<div class="divider" />
 		{#key $Visible}
 			{@html Message}
 		{/key}
-		<div class="divider"></div>
+		<div class="divider" />
 		<div class="modal-action w-full">
 			<button on:click={() => closeDeleteConfirmation(false)} class="btn btn-outline w-1/2">Cancel</button>
 			<button on:click={() => closeDeleteConfirmation(true)} class="btn btn-error w-1/2">Delete</button>
