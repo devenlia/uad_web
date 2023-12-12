@@ -75,7 +75,7 @@
 						</button>
 					</div>
 					<div class="tooltip tooltip-top tooltip-info" data-tip="Delete this link">
-						<button on:click={() => openDeleteConfirmation(() => deleteLink(link))} class="btn btn-square btn-ghost btn-sm hover:text-error">
+						<button on:click={() => openDeleteConfirmation(() => deleteLink(link), 'Link', `You're about to delete the link '${link.name}'.<br/> Careful, this can't be undone!`)} class="btn btn-square btn-ghost btn-sm hover:text-error">
 							<IconParkOutlineDelete />
 						</button>
 					</div>

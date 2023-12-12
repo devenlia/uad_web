@@ -64,7 +64,7 @@
 							</button>
 						</li>
 						<li class:tooltip={data.path === 'home'} class="w-full tooltip {data.path === 'home' ? 'disabled' : 'hover:text-error'}" data-tip={data.path === 'home' ? 'The homepage cannot be deleted.' : ''}>
-							<button on:click={() => openDeleteConfirmation(deletePage)} class="w-full">
+							<button on:click={() => openDeleteConfirmation(deletePage, 'Page', `You're about to delete the page at '${data.path}'.<br/> Careful, this can't be undone!`)} class="w-full">
 								<IconParkOutlineDelete />
 								<span>Delete this page</span>
 							</button>

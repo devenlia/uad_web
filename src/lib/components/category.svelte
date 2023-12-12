@@ -69,7 +69,7 @@
 			<div class="flex content-center gap-x-1 relative" style="right: -30px">
 				<button class="btn btn-sm btn-outline z-50" on:click={() => openContentWizard('link', null, item.id)}>Add a link!</button>
 				<button class="btn btn-sm btn-outline z-50" on:click={() => openModificationModal('category', item)}>Edit!</button>
-				<button class="btn btn-sm btn-outline btn-square hover:btn-error z-50" on:click={() => openDeleteConfirmation(deleteCategory)}><IconParkOutlineDelete /></button>
+				<button class="btn btn-sm btn-outline btn-square hover:btn-error z-50" on:click={() => openDeleteConfirmation(deleteCategory, 'Category', `You're about to delete the category '${item.name}'.<br/> Careful, this can't be undone!`)}><IconParkOutlineDelete /></button>
 			</div>
 		{:else}
 			<div class="z-50 relative flex justify-end items-center gap-1" style="right: -30px">

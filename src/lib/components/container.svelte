@@ -67,7 +67,7 @@
 					</button>
 				</li>
 				<li>
-					<button on:click={() => openDeleteConfirmation(deleteContainer)}>
+					<button on:click={() => openDeleteConfirmation(deleteContainer, 'Container', `You're about to delete the container '${container.name}'.<br/> Careful, this can't be undone!`)}>
 						<IconParkOutlineDelete />
 						<span>Delete this container</span>
 					</button>
