@@ -1,0 +1,47 @@
+# Example with traefik as Proxy
+services:
+  db:
+    image: mongo:latest
+    container_name: uad_db
+    networks:
+      - internal
+    labels:
+      - "traefik.enable=false"
+      
+  backend:
+    container_name: uad_backend
+    image: jannisdev/uad:latest
+    environment: 
+      MONGO_AUTH: noauth
+      MONGO_SERVER: db
+      MONGO_DATABASE: uad
+    depends_on:
+      - db
+    healthcheck:
+      disable: true
+    networks:
+      - internal
+    labels:
+      - "traefik.enable=false"
+      
+  web:
+    container_name: uad_web
+    image: jannisdev/uad_web:dev-latest
+    environment: 
+      BACKEND_SERVER: http://backend:8080
+    depends_on:
+      - db
+      - backend
+    networks:
+      - internal
+      - proxy
+    labels:
+      - "traefik.http.services.uad-web.loadbalancer.server.port=3000"
+      - "traefik.http.routers.uad-web.middlewares=https@file"
+      - "traefik.http.routers.uad-web.rule=Host(`uad.example.com`)"
+
+
+networks:
+  internal:
+  proxy:
+    external: true
